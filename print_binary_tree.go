@@ -13,7 +13,7 @@ func main() {
 }
 
 type T struct{
-    b int 
+    b int  `json:"someStringFieldsName"`
 }
 
 // Walk walks the tree t sending all values
