@@ -1,3 +1,6 @@
+/*
+    这是一个本地包
+ */
 package ahui1
 import "time"
 import "fmt"
