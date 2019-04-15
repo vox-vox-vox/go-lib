@@ -1,1 +1,1 @@
-export GO111MODULE=on go run a.go
+export GO111MODULE=on go run test.go
