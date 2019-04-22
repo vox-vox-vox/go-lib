@@ -1,5 +1,6 @@
 /**
-
+多态：相同的接口，大家都可以接入。工厂方法只是一种方式，不关心子类
+参考：https://www.zybuluo.com/phper/note/1059734
 作者：痕无落 链接：https://www.jianshu.com/p/b333c5f34ef6
 */
 package main
@@ -9,7 +10,6 @@ import (
 )
 
 type Animal interface {
-    Sleep()
     Age() int
     Type() string
 }
@@ -18,9 +18,6 @@ type Cat struct {
     MaxAge int
 }
 
-func (this *Cat) Sleep() {
-    fmt.Println("Cat need sleep")
-}
 func (this *Cat) Age() int {
     return this.MaxAge
 }
@@ -32,9 +29,6 @@ type Dog struct {
     MaxAge int
 }
 
-func (this *Dog) Sleep() {
-    fmt.Println("Dog need sleep")
-}
 func (this *Dog) Age() int {
     return this.MaxAge
 }
@@ -57,7 +51,6 @@ func Factory(name string) Animal {
 
 func main() {
     animal := Factory("dog")
-    animal.Sleep()
     fmt.Printf("%s max age is: %d", animal.Type(), animal.Age())
 }
 

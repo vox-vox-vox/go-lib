@@ -1,30 +1,41 @@
+/**
+Animal 通过interface 继承其实是多余的, 而是通过结构体继承
+type Pet interface {
+    Name() string
+    Speak() string
+    Play()
+}
+type Dog interface {
+    Pet
+    Breed() string
+}
+
+
+*/
 package main
 
 import (
     "fmt"
 )
 
-type Pet interface {
-    Name() string
-    Speak() string
-    Play()
-}
-
+// Det interface struct func define
 type pet struct {
     speaker func() string
     name    string
 }
-
-type Dog interface {
-    Pet
-    Breed() string
+func (p *pet) Name() string {
+    return p.name
 }
-
-type dog struct {
-    pet
-    breed string
+func (p *pet) Speak() string {
+    //missing spaker = Factory.speak
+    return p.speaker()
 }
-
+func (p *pet) Play() {
+    fmt.Println(p.Speak())
+}
+func (p *pet) speak() string {
+    return fmt.Sprintf("my name is %v ", p.name)
+}
 func NewPet(name string) *pet {
     p := &pet{
         name: name,
@@ -33,20 +44,13 @@ func NewPet(name string) *pet {
     return p
 }
 
-func (p *pet) Play() {
-    fmt.Println(p.Speak())
+// Dog define
+type dog struct {
+    pet
+    breed string
 }
-
-func (p *pet) Speak() string {
-    return p.speaker()
-}
-
-func (p *pet) speak() string {
-    return fmt.Sprintf("my name is %v", p.name)
-}
-
-func (p *pet) Name() string {
-    return p.name
+func (d *dog) speak() string {
+   return fmt.Sprintf("speak(): %v\n", d.pet.speak())
 }
 
 func NewDog(name, breed string) *dog {
@@ -58,17 +62,11 @@ func NewDog(name, breed string) *dog {
     return d
 }
 
-func (d *dog) speak() string {
-    return fmt.Sprintf("%v and I am a %v", d.pet.speak(), d.breed)
-}
 
-func Play(p Pet) {
-    p.Play()
-}
 
 func main() {
     d := NewDog("spot", "pointer")
     fmt.Println(d.Name())
     fmt.Println(d.Speak())
-    Play(d)
+    d.Play()
 }
