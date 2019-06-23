@@ -7,10 +7,10 @@ import "fmt"
 
 var now = time.Now()
 func init() {
-    fmt.Printf("now: %v\n", now)
+    fmt.Printf("ahui1/t.go:now: %v\n", now)
 }
 func init() {
-    fmt.Printf("since: %v\n", time.Now().Sub(now))
+    fmt.Printf("ahui1/t.go:since: %v\n", time.Now().Sub(now))
 }
 
 /*
