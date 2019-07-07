@@ -1,0 +1,3 @@
+[submodule "gonic-example"]
+	path = gonic-example
+	url = https://github.com/gin-gonic/examples
