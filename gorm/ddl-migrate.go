@@ -19,7 +19,7 @@ type User struct {
 }
 
 func main() {
-  db, err := gorm.Open("postgres", "host=localhost user=postgres dbname=ahuigo sslmode=disable password=")
+  db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
   if err != nil {
     println(err)
     println(err.Error())
