@@ -14,22 +14,29 @@ type Product struct {
 
 type User struct {
   gorm.Model
-  UserName string
-  Age uint
+  Name string
 }
+
+// `Profile` belongs to `User`, `UserID` is the foreign key
+type Profile struct {
+  gorm.Model
+  UserID int
+  User   User
+  Name   string
+}
+
 
 func main() {
   db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
   if err != nil {
     println(err)
-    println(err.Error())
     fmt.Println(err)
     panic("连接数据库失败")
   }
 
 
   // 自动迁移模式
-  db.AutoMigrate(&Product{})
+  db.AutoMigrate(&Product{},&Profile{},&User{})
 
   // 创建
   db.Create(&Product{Code: "L1217", Price: 17})
