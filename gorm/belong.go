@@ -12,45 +12,46 @@ type Product struct {
   Price uint
 }
 
-// User has and belongs to many languages, use `user_languages` as join table
 type User struct {
-    gorm.Model
-    Languages         []Language `gorm:"many2many:user_languages;"`
+  gorm.Model
+  Name string
 }
 
+// `Profile` belongs to `User`, `UserID` is the foreign key
 type Profile struct {
-    gorm.Model
-  Name      string
-  User      User `gorm:"foreignkey:UserRefer"` // use UserRefer as foreign key
-  UserRefer uint
+  gorm.Model
+  UserID int
+  User   User
+  Name   string
 }
 
-type Language struct {
-    gorm.Model
-    Name string
-}
+
 func main() {
-
   db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
+  pf := fmt.Printf
+  pf("'1'")
   if err != nil {
     println(err)
     fmt.Println(err)
     panic("连接数据库失败")
   }
+  db.LogMode(true)
+  //db.DropTable("users", "profiles")
+
 
 
   // 自动迁移模式
-      db.LogMode(true)
-  db.AutoMigrate(&Product{},&Profile{},Language{},User{})
+  db.AutoMigrate(&Product{},&Profile{},&User{})
+  user:=User{Model:gorm.Model{ID:2}}
+  user=User{}
 
-  user:=User{Model:gorm.Model{ID:1}}
   profile:=Profile{}
-db.Model(&user).Related(&profile)
-return
+  c:=db.Model(&user).Related(&profile).First(&profile)
+  pf("%#v", c)
 
-//// SELECT * FROM "users" INNER JOIN "user_languages" ON "user_languages"."user_id" = "users"."id" WHERE  ("user_languages"."language_id" IN ('111'))
 
   // 创建
+  /*
   db.Create(&Product{Code: "L1217", Price: 17})
   db.Create(&Product{Code: "L1218", Price: 18})
 
@@ -63,6 +64,7 @@ fmt.Println(product)
 
   // 更新 - 更新product的price为2000
   db.Model(&product).Update("Price", 22)
+  */
 
   defer db.Close()
 }
