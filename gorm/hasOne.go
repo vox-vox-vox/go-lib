@@ -45,7 +45,7 @@ func main() {
 
   // not work db.Model(&user).Related(&card)
   db.Model(&user).Related(&card, "CreditCard")
-  //db.First(&user).Related(&card, "CreditCard")
+    db.Model(&user).Related(&user.CreditCard, "CreditCard")
 
   pf("%+v\n", user)
   pf("%+v\n", card)
