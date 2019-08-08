@@ -12,18 +12,20 @@ type Product struct {
   Price uint
 }
 
-type User struct {
-  gorm.Model
-  Name string
+
+type CreditCard struct {
+    gorm.Model
+    Number string
+    UID    string
 }
 
-// `Profile` belongs to `User`, `UserID` is the foreign key
-type Profile struct {
-  gorm.Model
-  UserID int
-  User   User
-  Name   string
+type User struct {
+    gorm.Model
+    Name   string    `sql:"index"`
+    CreditCard CreditCard `gorm:"foreignkey:uid;association_foreignkey:name"`
 }
+
+
 
 
 func main() {
@@ -41,13 +43,15 @@ func main() {
 
 
   // 自动迁移模式
-  db.AutoMigrate(&Product{},&Profile{},&User{})
-  user:=User{Model:gorm.Model{ID:2}}
-  user=User{}
+  db.AutoMigrate(&Product{},&User{},&CreditCard{})
+  user:=User{Model:gorm.Model{ID:2}, Name:"ahui",}
+  //user=User{ID:22}
 
-  profile:=Profile{}
-  c:=db.Model(&user).Related(&profile).First(&profile)
-  pf("%#v", c)
+  var card CreditCard
+db.Model(&user).Related(&card, "CreditCard").First(&card)
+//  profile:=Profile{}
+ // c:=db.Model(&user).Related(&profile)
+  //pf("%#v", c)
 
 
   // 创建
