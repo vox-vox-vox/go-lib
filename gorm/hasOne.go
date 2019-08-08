@@ -43,9 +43,9 @@ func main() {
   db.Create(&User{Name: "ahui2"})
   db.Create(&CreditCard{UID: "ahui2", Number:"182-2"})
 
-  // not work db.Model(&user).Related(&card)
-  //db.Model(&user).Related(&card, "CreditCard")
-    db.First(&user).Related(&user.CreditCard, "CreditCard")
+  // not work: db.Model(&user).Related(&card)
+  // work: db.Model(&user).Related(&card, "CreditCard")
+  db.First(&user).Related(&user.CreditCard, "CreditCard")
 
   pf("%+v\n", user)
   pf("%+v\n", card)
