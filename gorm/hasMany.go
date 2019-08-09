@@ -39,11 +39,9 @@ func main() {
     db.Create(&user)
     db.Create(&CreditCard{UserMemberNumber:"ahui",})
     db.Find(&user).Related(&cards, "CreditCards")//.First(&user)
-    pf("%+v\n", user)
-    pf("%+v\n", cards)
+    pf("user:%+v;\ncards:%+v\n", user, cards)
     db.First(&user).Related(&user.CreditCards, "CreditCards")//.First(&user)
-    pf("%+v\n", user)
-    pf("%+v\n", cards)
+    pf("user:%+v;\ncards:%+v\n", user, cards)
 
   defer db.Close()
 }
