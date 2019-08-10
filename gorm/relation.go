@@ -47,7 +47,7 @@ type CreditCard struct {
 }
 
 func main() {
-    db, err := gorm.Open("postgres", "host=localhost user=postgres dbname=ahuigo sslmode=disable password=")
+    db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
     db.LogMode(true)
     if err != nil {
         panic("failed to connect database")
