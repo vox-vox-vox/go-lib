@@ -13,7 +13,16 @@ type User struct {
 type Language struct {
     ID   int    `gorm:"primary_key"`
     Name string
-    Users             []*User     `gorm:"many2many:user_languages;"`
+    UserId int
+    Users             []*User     `gorm:"many2many:languages;association_jointable_foreignkey:user_id;jointable_foreignkey:user_id;"` 
+                /*
+                association_jointable_foreignkey: 
+                    JOIN ON language.user_id=users.id
+                jointable_foreignkey: 
+                    Where language.user_id in (2)
+                HasMany:
+                    association_foreignkey:ID;foreignkey:ID;
+                */
 }
 
 
@@ -36,7 +45,7 @@ func main() {
     language := Language{}
 
     db.Create(&Language{Name:"en"})
-    db.Create(&Language{Name:"zh"})
+    db.Create(&Language{Name:"zh",UserId:2})
     db.Create(&User{})
     //db.First(&language, "id = ?", 2)
     language = Language{ID:2}
