@@ -6,15 +6,17 @@ import (
     "fmt"
 )
 type User struct {
-    gorm.Model
-    Languages         []*Language `gorm:"many2many:user_languages;"`
+    //gorm.Model
+    ID   int    `gorm:"primary_key"`
+    Name string
+    Languages         []*Language `gorm:"many2many:uls;"`
 }
 
 type Language struct {
     ID   int    `gorm:"primary_key"`
-    Name string
+    Locale string
     UserId int
-    Users             []*User     `gorm:"many2many:languages;association_jointable_foreignkey:user_id;jointable_foreignkey:user_id;"` 
+    Users             []*User     `gorm:"many2many:uls;association_jointable_foreignkey:user_id;jointable_foreignkey:user_id;"` 
                 /*
                 association_jointable_foreignkey: 
                     JOIN ON language.user_id=users.id
@@ -42,19 +44,25 @@ func main() {
 
 
     var users []User
+    var languages []Language
     language := Language{}
+    user :=User{}
 
-    db.Create(&Language{Name:"en"})
-    db.Create(&Language{Name:"zh",UserId:2})
-    db.Create(&User{})
+    db.Create(&Language{Locale:"en"})
+    db.Create(&Language{Locale:"zh",UserId:2})
+    db.Create(&User{Name:"Ahui",ID:2})
     //db.First(&language, "id = ?", 2)
     language = Language{ID:2}
 
     db.Model(&language).Related(&users,  "Users")
-        //SELECT "users".* FROM "users" INNER JOIN "languages" ON "languages"."user_id" = "users"."id" WHERE ("languages"."user_id" IN ('2'))
+    //SELECT "users".* FROM "users" INNER JOIN "languages" ON "languages"."user_id" = "users"."id" WHERE ("languages"."user_id" IN ('2'))
 
+    pf("users:%+v;\nlanguage:%+v\n", users, language)
+    pf("--------------\n")
+    //db.Model(&user).Related(&languages, "Languages")
+    //db.Preload("Languages").First(&user)
+    pf("user:%+v;\nlanguages:%+v\n", user, languages)
 
-    pf("user:%+v;\n:language:%+v\n", users, language)
 
   defer db.Close()
 }
