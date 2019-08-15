@@ -9,21 +9,23 @@ type User struct {
     //gorm.Model
     ID   int    `gorm:"primary_key"`
     Name string
-    Languages         []*Language `gorm:"many2many:uls;"`
+    Languages         []Language `gorm:"many2many:user_languages;"`
+    CreditCard CreditCard `gorm:"foreignkey:uid;association_foreignkey:name"`
+}
+type CreditCard struct {
+    gorm.Model
+    Number string
+    UID    string
 }
 
 type Language struct {
     ID   int    `gorm:"primary_key"`
-    Locale string
-    UserId int
-    Users             []*User     `gorm:"many2many:uls;association_jointable_foreignkey:user_id;jointable_foreignkey:user_id;"` 
+    Name string
+    Users             []User     `gorm:"many2many:user_languages;association_jointable_foreignkey:user_id;jointable_foreignkey:language_id;foreignkey:ID"` 
                 /*
-                association_jointable_foreignkey: 
-                    JOIN ON language.user_id=users.id
-                jointable_foreignkey: 
-                    Where language.user_id in (2)
                 HasMany:
-                    association_foreignkey:ID;foreignkey:ID;
+                    association_foreignkey:ID;//(User.ID);
+                    foreignkey:ID; //(Language.ID);
                 */
 }
 
@@ -38,31 +40,39 @@ func main() {
     panic("连接数据库失败")
   }
   db.LogMode(true)
-  //db.DropTable("users", "profiles")
+  db.DropTable("users", "languages","user_languages")
   // 自动迁移模式
-  db.AutoMigrate(&User{},&Language{})
+  db.AutoMigrate(&User{},&Language{},&CreditCard{})
+
+    user := User{
+        Name:            "jinzhu",
+        Languages:       []Language{
+            {Name: "ZH"},
+            {Name: "EN"},
+        },
+        CreditCard: CreditCard{UID:"jinzhu", Number:"6222"},
+    }
+    db.Create(&user)
 
 
+
+    //create: HasMany/hasOne/Many2Many
     var users []User
-    var languages []Language
-    language := Language{}
-    user :=User{}
+    var language Language
 
-    db.Create(&Language{Locale:"en"})
-    db.Create(&Language{Locale:"zh",UserId:2})
-    db.Create(&User{Name:"Ahui",ID:2})
-    //db.First(&language, "id = ?", 2)
-    language = Language{ID:2}
-
+    //Query Related
+    pf("Related Users:...\n")
+    user=User{}
+    db.First(&language, "id = ?", 1)
     db.Model(&language).Related(&users,  "Users")
-    //SELECT "users".* FROM "users" INNER JOIN "languages" ON "languages"."user_id" = "users"."id" WHERE ("languages"."user_id" IN ('2'))
+    pf("users:%+v;\n", users)
+    pf("--------------\\n")
 
-    pf("users:%+v;\nlanguage:%+v\n", users, language)
-    pf("--------------\n")
-    //db.Model(&user).Related(&languages, "Languages")
-    //db.Preload("Languages").First(&user)
-    pf("user:%+v;\nlanguages:%+v\n", user, languages)
-
+    //Query Preload
+    pf("Preload Users:...\n")
+    user=User{}
+    db.Preload("Languages").Preload("CreditCard").First(&user)
+    pf("user:%+v;\n\n", user, )
 
   defer db.Close()
 }

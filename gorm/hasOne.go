@@ -41,7 +41,7 @@ func main() {
   var card CreditCard
     // 创建
   db.Create(&User{Name: "ahui2"})
-  db.Create(&CreditCard{UID: "ahui2", Number:"182-2"})
+  db.Create(&CreditCard{UID: "ahui2", Number:"188-2"})
 
   // not work: db.Model(&user).Related(&card)
   // work: db.Model(&user).Related(&card, "CreditCard")
