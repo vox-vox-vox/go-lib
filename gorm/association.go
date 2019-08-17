@@ -33,18 +33,19 @@ type Language struct {
 func main() {
   db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
   pf := fmt.Printf
-  pf("'1'")
+  pf("'pf init'")
   if err != nil {
     println(err)
     fmt.Println(err)
     panic("连接数据库失败")
   }
   db.LogMode(true)
-  db.DropTable("users", "languages","user_languages")
+  //db.DropTable("users", "languages","user_languages")
   // 自动迁移模式
   db.AutoMigrate(&User{},&Language{},&CreditCard{})
 
     user := User{
+        ID:1,
         Name:            "jinzhu",
         Languages:       []Language{
             {Name: "ZH"},
@@ -52,8 +53,10 @@ func main() {
         },
         CreditCard: CreditCard{UID:"jinzhu", Number:"6222"},
     }
-    db.Create(&user)
-
+    //db.Create(&user)
+    //db.Set("gorm:association_autoupdate", false).Create(&user)
+    db.Set("gorm:association_save_reference", false).Save(&user)
+    //db.Save(&user)
 
 
     //create: HasMany/hasOne/Many2Many
@@ -61,12 +64,13 @@ func main() {
     var language Language
 
     //Query Related
+    pf("--------------\n\n")
     pf("Related Users:...\n")
     user=User{}
     db.First(&language, "id = ?", 1)
     db.Model(&language).Related(&users,  "Users")
     pf("users:%+v;\n", users)
-    pf("--------------\\n")
+    pf("--------------\n\n")
 
     //Query Preload
     pf("Preload Users:...\n")
