@@ -75,7 +75,7 @@ func main() {
     //Query Preload
     pf("Preload Users:...\n")
     user=User{}
-    db.Preload("Languages").Preload("CreditCard").First(&user)
+    db.Preload("Languages.Name").Preload("CreditCard").First(&user)
     pf("user:%+v;\n\n", user, )
 
   defer db.Close()

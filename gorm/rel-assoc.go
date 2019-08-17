@@ -39,7 +39,7 @@ func main() {
     languages := []Language{}
     //等价
     //db.Model(&user).Related(&languages,  "Languages")
-    db.Model(&user).Association("Languages").Replace(Language{Name: "DE.............................................."}, Language{Name:"ahui"}).Find(&languages)
+    db.Model(&user).Association("Languages").Append(Language{Name: "DE.............................................."}, Language{Name:"ahui"}).Find(&languages)
 
     a:=db.Model(&user).Association("Languages").Count()
 
