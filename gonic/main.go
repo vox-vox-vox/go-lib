@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,10 +13,17 @@ func setupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.Default()
+	p := fmt.Println
+    pf := fmt.Printf
+    p("")
+    pf("")
 
 	// Ping test
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+	r.POST("/ping", func(c *gin.Context) {
+            ids := c.QueryMap("names")
+            names := c.PostFormMap("ids")
+
+            fmt.Printf("ids: %#v; names: %#v", ids, names)
 	})
 
 	// Get user value
