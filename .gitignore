@@ -2,6 +2,7 @@ godemo/
 gonic/tmp
 test.db
 go.sum
+.vscode
 
 
 # Binaries for programs and plugins
