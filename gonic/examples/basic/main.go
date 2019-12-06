@@ -1,8 +1,7 @@
 package main
-//$ curl -H 'Content-type:application/json' http://foo:bar@localhost:8080/admin -d '{"value":"abc1"}'
+
 import (
 	"net/http"
-"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,24 +12,16 @@ func setupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.Default()
-	p := fmt.Println
-    pf := fmt.Printf
-    p("")
-    pf("")
 
 	// Ping test
-	r.POST("/ping", func(c *gin.Context) {
-            ids := c.QueryMap("names")
-            names := c.PostFormMap("ids")
-
-            fmt.Printf("ids: %#v; names: %#v", ids, names)
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
 	})
 
 	// Get user value
 	r.GET("/user/:name", func(c *gin.Context) {
 		user := c.Params.ByName("name")
 		value, ok := db[user]
-        p(db)
 		if ok {
 			c.JSON(http.StatusOK, gin.H{"user": user, "value": value})
 		} else {
@@ -55,16 +46,13 @@ func setupRouter() *gin.Engine {
 
 		// Parse JSON
 		var json struct {
-            Value string `json:"value" binding:"required"`
+			Value string `json:"value" binding:"required"`
 		}
 
-        if err:=c.Bind(&json);err == nil {
+		if c.Bind(&json) == nil {
 			db[user] = json.Value
-			c.JSON(http.StatusOK, gin.H{"status": user+"ok"})
-		}else{
-            p(err)
-			c.JSON(http.StatusOK, gin.H{"status": "noset"})
-        }
+			c.JSON(http.StatusOK, gin.H{"status": "ok"})
+		}
 	})
 
 	return r
