@@ -10,11 +10,8 @@ import (
 	_ "bytes"
     "net/http/cookiejar"
 )
-
 func main() {
-    //resp, _ := http.PostForm("https://httpbin.org/cookies/set?ahui=mo",
     cookieJar, _ := cookiejar.New(nil)
-
     client := &http.Client{
         Jar: cookieJar,
         CheckRedirect: func(req *http.Request, via []*http.Request) error {
