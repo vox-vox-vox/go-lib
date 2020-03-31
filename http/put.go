@@ -20,7 +20,7 @@ func main() {
     }
     data := []byte(`{"hello": "world"}`)
     url := "https://httpbin.org/put?a=1"
-	//req, _ := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	//work req, _ := http.NewRequest("PUT", url, bytes.NewReader(data))
 	req, _ := http.NewRequest("PUT", url, bytes.NewBuffer(data))
     fmt.Println(bytes.NewBuffer, data)
     //req, err := http.NewRequest("PUT", "http://httpbin.org/put", nil) //body io.Reader=nil
