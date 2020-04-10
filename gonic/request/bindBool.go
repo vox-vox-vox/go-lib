@@ -6,9 +6,10 @@ func main() {
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
         var query struct{
+            // true 的情况只能是1,true,True
         	Debug bool `json:"debug" form:"debug" gorm:"-"`
         }
-        c.ShouldBindQuery(query)
+        c.ShouldBindQuery(&query)
 
 		c.JSON(200, gin.H{
 			"message": "pong",
