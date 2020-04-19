@@ -1,4 +1,5 @@
 godemo/
+/log/logs
 gonic/tmp
 test.db
 go.sum
