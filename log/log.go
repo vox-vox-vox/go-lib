@@ -4,7 +4,5 @@ import (
 )
 
 func main(){
-    var a struct {}
-    log.Println(a, "abc")
-
+    log.Println("timeout of 5 seconds.", []string{"abc"})
 }
