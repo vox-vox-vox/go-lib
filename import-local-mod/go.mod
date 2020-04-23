@@ -1,4 +1,4 @@
-module tt
+module c/go_cli_demo
 
 require (
 	ahui1 v0.0.0

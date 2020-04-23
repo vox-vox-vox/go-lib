@@ -1,8 +1,15 @@
 FROM golang:1.12.7-alpine3.10
+ENV CGO_ENABLED 0
+
+RUN apk update && apk add bash inotify-tools
 
 RUN mkdir /build/
 WORKDIR /build/
+
 # build micro-service binary
 COPY main.go /build/main.go
-RUN go build -o /server main.go
-ENTRYPOINT ["/server"]
+COPY startScript.sh /build/startScript.sh
+
+RUN go -gcflags "all=-N -l" build -o /server main.go
+
+ENTRYPOINT sh startScript.sh
