@@ -46,8 +46,4 @@ func main() {
         fmt.Printf("key3=%#v", val2)
 	}
 
-    var a=''
-    if bool(a){
-        fmt.Println("abc")
-    }
 }

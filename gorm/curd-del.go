@@ -18,6 +18,12 @@ type User struct {
   Age uint
 }
 
+type DomainUser struct {
+	gorm.Model
+	Domain   string `gorm:"unique_index:idx_domain_user" json:"domain"`
+	Username string `gorm:"unique_index:idx_domain_user" json:"username"`
+}
+
 func main() {
   db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
   if err != nil {
@@ -29,13 +35,16 @@ func main() {
 
 
   // 自动迁移模式
-  db.AutoMigrate(&Product{})
+  db.AutoMigrate(&Product{}, &DomainUser{})
 
   // 创建
-  p := Product{Code: "L1217", Price: 17}
-  db.Create(&p)
-  // del
-  db.Where("code LIKE ?", "%1217").Delete(Product{})
+  db.LogMode(true)
+  db.Create(&DomainUser{Domain:"com", Username:"ahui"})
+  db.Create(&DomainUser{Domain:"com", Username:"hilo1"})
+  //db.Where("code LIKE ?", "%1217").Delete(Product{})
+  db.Where(DomainUser{Username:"com"}).Find(DomainUser{})
+
+
   /*
   // 读取
   var product Product
