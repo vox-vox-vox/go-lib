@@ -12,6 +12,7 @@ runServer() {
   touch /tmp/dlv_log/output.log
 
   # run server with debug
+  echo dlv --listen=:2345 --headless=true /server 
   dlv --listen=:2345 --headless=true --api-version=2 exec \
    /server | tee -a /tmp/dlv_log/output.log &
 
