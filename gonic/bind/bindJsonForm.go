@@ -32,7 +32,7 @@ func main() {
     // 一个 HTML 表单绑定的示例 (user=manu&password=123)
     router.POST("/loginForm", func(c *gin.Context) {
         var form Login
-        // 这个将通过 content-type 头去推断绑定器使用哪个依赖。
+        // 这个将通过 content-type 头去推断绑定器使用哪个依赖: bindJSON/Form
         if err := c.ShouldBind(&form); err == nil {
             if form.User == "manu" && form.Password == "123" {
                 c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
