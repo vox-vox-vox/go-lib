@@ -1,6 +1,7 @@
 package main
 
 import "github.com/gin-gonic/gin"
+import "time"
 
 func main() {
 	r := gin.Default()
@@ -9,6 +10,8 @@ func main() {
         	Debug bool `json:"debug" form:"debug" gorm:"-"`
         }
         c.ShouldBindQuery(query)
+        time.Sleep(3000 * time.Millisecond)
+        println("hello")
 
 		c.JSON(200, gin.H{
 			"message": "pong",
