@@ -1,6 +1,7 @@
 godemo/
 /log/logs
 gonic/tmp
+tmp/
 test.db
 go.sum
 .vscode
