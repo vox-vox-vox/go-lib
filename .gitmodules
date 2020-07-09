@@ -1,3 +1,3 @@
-[submodule "gonic-example"]
-	path = gonic-example
-	url = https://github.com/gin-gonic/examples
+[submodule "go-cli-demo"]
+	path = go-cli-demo
+	url = https://github.com/ahuigo/go-cli-demo.git
