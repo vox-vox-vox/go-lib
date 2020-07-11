@@ -1,6 +1,8 @@
-package middleware
+package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 // CORS 跨域访问
 func CORS() gin.HandlerFunc {
@@ -11,11 +13,16 @@ func CORS() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 
+		// fmt.Println("cors before")
+		// c.JSON(200, gin.H{"message": "cors"})
+		// c.Abort()
+
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
 			return
 		}
 
+		// 默认 Next
 		c.Next()
 	}
 }
