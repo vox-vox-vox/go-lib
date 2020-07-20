@@ -6,6 +6,7 @@ type Role struct{
 type Roles []*Role
 func main(){
     roles := Roles{&Role{[]string{"ahui"}}}
+    // 如果不用pointer, range 就会copy values
     for _, role:= range roles{
         role.Users = append(role.Users, "a1")
         role.Users = append(role.Users, "b1")
