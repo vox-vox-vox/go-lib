@@ -5,7 +5,7 @@ import (
 )
 
 // 交替打印字符
-// go-lib/goroutine/string-atom-race.go
+// go-lib/goroutine/race-string.go
 const (
   FIRST  = "WHAT THE"
   SECOND = "F*CK"
