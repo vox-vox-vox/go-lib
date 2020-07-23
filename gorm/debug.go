@@ -27,19 +27,13 @@ type User struct {
 }
 
 // 创建
-func create() {
-	p := Product{Code: "L1217", Price: 17}
-	fmt.Printf("1. %#v\n", db.NewRecord(p))
-	fmt.Printf("2. %#v\n", p.ID)
-	db.Create(&p)
-	fmt.Printf("3. %#v\n", db.NewRecord(p))
-	fmt.Printf("4. %#v\n", p.ID)
-}
-
-// 创建
 func createStock() {
-	p := Stock{Code: "L1217", Price: 17}
-	db.Create(&p)
+	p := Stock{Code: "L12190", Price: 17}
+	if db.NewRecord(p) {
+		if err := db.Create(&p).Error; err != nil {
+			panic(err)
+		}
+	}
 }
 
 // update
@@ -69,7 +63,6 @@ func main() {
 	}
 
 	// 自动迁移模式
-	db.AutoMigrate(&Product{})
 	db.AutoMigrate(&Stock{})
 	createStock()
 	updateStock()

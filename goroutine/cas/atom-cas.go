@@ -1,3 +1,6 @@
+// https://github.com/golang/go/issues/17604
+// 无锁队列的实现 https://coolshell.cn/articles/8239.html
+// @source go-lib/goroutine/cas/atom-cas.go
 package queue
 
 import (
