@@ -38,7 +38,7 @@ func create() {
 
 // 创建
 func createStock() {
-	p := Stock{Code: "L1217", Price: 17}
+	p := Stock{Code: "L1218", Price: 17}
 	db.Create(&p)
 }
 
@@ -59,7 +59,8 @@ func selectStock() {
 }
 
 func main() {
-	db, err := gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
+    var err error
+	db, err = gorm.Open("postgres", "host=localhost user=role1 dbname=ahuigo sslmode=disable password=")
 	db.LogMode(true)
 	if err != nil {
 		println(err)

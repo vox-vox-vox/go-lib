@@ -1,31 +1,25 @@
 package main
+
 import (
-    "log"
-    "encoding/json"
-    "fmt"
+	"encoding/json"
+	"fmt"
 )
-func f() int {
-    return 1
+
+type A struct {
+	Name string `json:"name"`
+	Age  string `json:"age"`
 }
 
-type A struct{
-    Name string `json:"name"`
-    Age string `json:"age"`
+func main() {
+	data := t()
+	fmt.Println(data)
 }
-
-var c = f()
-
-func main(){
-    data:=t()
-    fmt.Println(data)
-}
-func t()(x *A){
-    log.Println(c)
-    var r *A
-    fmt.Println(r)
-    err :=json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &x)
-    fmt.Println(err, r,"end",x)
-    err =json.Unmarshal([]byte(`{"age":"21"}`), &x)
-    fmt.Println(err, r,"end",x)
-    return
+func t() *A {
+	var x *A
+	// 不能直接访问nil pointer： x.Name = "ahui", 但是json 却是可以的
+	err := json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &x)
+	fmt.Println("err:", err, ",x:", x)
+	err = json.Unmarshal([]byte(`{"age":"21"}`), &x)
+	fmt.Println("err:", err, ",x:", x)
+	return x
 }
