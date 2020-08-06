@@ -32,6 +32,10 @@ func main() {
   p := &Person{}
 
   // read
+  db.Find(p)
+  p = &Person{}
+
+  // read with where
   db.Where(Person{Name:"com"}).Find(p)
 
   // delete(自动判断主键p.Name)
