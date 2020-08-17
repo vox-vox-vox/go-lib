@@ -13,18 +13,21 @@ import "reflect"
         greetingPtr := &greeting
         f := Foo{A: 10, B: "Salutations"}
         fp := &f
+        m := map[string]interface{}{"age":1, "name":"ahui"}
 
         slType := reflect.TypeOf(sl)
         gType := reflect.TypeOf(greeting)
         grpType := reflect.TypeOf(greetingPtr)
         fType := reflect.TypeOf(f)
         fpType := reflect.TypeOf(fp)
+        mType := reflect.TypeOf(m)
 
         examiner(slType, 0)
         examiner(gType, 0)
         examiner(grpType, 0)
         examiner(fType, 0)
         examiner(fpType, 0)
+        examiner(mType, 0)
     }
 
     func examiner(t reflect.Type, depth int) {
@@ -36,12 +39,12 @@ import "reflect"
         case reflect.Struct:
             for i := 0; i < t.NumField(); i++ {
                 f := t.Field(i)
-                fmt.Printf("%s field:%%T=%T\n", strings.Repeat("\t", depth+1), f)
-                fmt.Printf("%s fieldByName:%%T=%T\n", strings.Repeat("\t", depth+1), t.FieldByName)
+                fmt.Printf("%s field:%d==================%%T=%T\n", strings.Repeat("\t", depth+1), i+1, f)
                 fmt.Println(strings.Repeat("\t", depth+1), "Field", i+1, "name is", f.Name, "type is", f.Type.Name(), "and kind is", f.Type.Kind())
+                fmt.Printf("%s fieldByName:%%T=%T\n", strings.Repeat("\t", depth+1), t.FieldByName)
                 if f.Tag != "" {
-                    fmt.Println(strings.Repeat("\t", depth+2), "Tag is", f.Tag)
-                    fmt.Println(strings.Repeat("\t", depth+2), "tag1 is", f.Tag.Get("tag1"), "tag2 is", f.Tag.Get("tag2"))
+                    fmt.Println(strings.Repeat("\t", depth+2), "f.Tag:", f.Tag)
+                    fmt.Println(strings.Repeat("\t", depth+2), "tag1:", f.Tag.Get("tag1"), ",tag2:", f.Tag.Get("tag2"))
                 }
             }
         }
