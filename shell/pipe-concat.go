@@ -8,20 +8,15 @@ import (
 )
 
 func main() {
-    c1 := exec.Command("ls")
-    c2 := exec.Command("wc", "-l")
+    cmd := exec.Command("cat")
 
-    r, w := io.Pipe()
-    c1.Stdout = w
-    c2.Stdin = r
+    var cmd bytes.Buffer
+    cmd.Stdout = &b2
 
-    var b2 bytes.Buffer
-    c2.Stdout = &b2
-
-    c1.Start()
-    c2.Start()
-    c1.Wait()
-    w.Close()
-    c2.Wait()
+    if err := cmd.Run(); err != nil {
+		return err
+	}
+    cmd.Close()
+    cmd.Run()
     io.Copy(os.Stdout, &b2)
 }

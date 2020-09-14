@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+    //"string"
 )
 
 func swap(x, y string) (string, string) {
@@ -13,7 +14,8 @@ func multiArgsHandler(args ...interface{}) () {
 
 func main() {
 	fmt.Println(swap("a","b")) 
-	multiArgsHandler(swap("a","b")) 
-	println(swap("a","b")) 
+	multiArgsHandler(swap("a","b")) // ok
+
+    //println(swap("a","b"))  //error: multiple-value swap() in single-value context
 }
 
