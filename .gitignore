@@ -6,6 +6,8 @@ test.db
 go.sum
 .vscode
 
+go-debug/delve/debug
+
 
 # Binaries for programs and plugins
 *.exe
