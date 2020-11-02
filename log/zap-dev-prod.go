@@ -5,6 +5,11 @@ import (
     "time"
 )
 
+type User struct {
+    Username string
+    Age int 
+}
+
 func main() {
     // format NewProduction json序列化输出; NewDevelopment: 普通Info format
     logger, _ := zap.NewDevelopment()
@@ -17,7 +22,7 @@ func main() {
         zap.Duration("backoff", time.Second),
     )
 
-    loggerS := logger.Named("service").Sugar()
-    loggerS.Debugw("msg", "k1", 123, "k2", "v2")
-    loggerS.Debugw("msg", "k1", map[string]interface{}{"k":1})
+    loggerS := logger.Named("日志名").Sugar()
+    loggerS.Debugw("Sugar", "k1", 123, "k2", "v2")
+    loggerS.Debugw("Sugar", "k1", map[string]interface{}{"k":1}, User{})
 }

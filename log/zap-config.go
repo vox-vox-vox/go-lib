@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+    // 设置编码
     encoderConfig := zapcore.EncoderConfig{
         TimeKey:        "time",
         LevelKey:       "level",
@@ -27,7 +28,7 @@ func main() {
 
     config := zap.Config{
         Level:            atom,                                                // 日志级别
-        Development:      true,                                                // 开发模式，堆栈跟踪
+        Development:      false,                                                // 开发模式，堆栈跟踪
         Encoding:         "console",                                              // 输出格式 console 或 json
         EncoderConfig:    encoderConfig,                                       // 编码器配置
         InitialFields:    map[string]interface{}{"serviceName": "spikeProxy"}, // 初始化字段，如：添加一个服务器名称
@@ -41,6 +42,8 @@ func main() {
         panic(fmt.Sprintf("log 初始化失败: %v", err))
     }
     logger.Info("log 初始化成功")
+
+    logger.Sugar().Debugw("Sugar", "k1", map[string]interface{}{"k":1})
 
     logger.Info("无法获取网址",
         zap.String("url", "http://www.baidu.com"),
