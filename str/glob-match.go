@@ -10,7 +10,7 @@ import (
 func main() {
 	// path.Match stops at a '/', whereas wildcard.Match considers the path as a flat namespace.
 	pattern := "/*/*/file/**"
-	text := "/ahui/go/file/abc/bcd/def"
+	text := "/ahui/go/file/abc/bcd"
 
 	doesMatch := Match(pattern, text)
 	fmt.Printf("=====Wildcard package match===== \nPattern:   \"%s\" \nText:      \"%s\" \nDoesMatch: %v", pattern, text, doesMatch)
@@ -25,6 +25,7 @@ Pattern:
 		var star bool
 		var chunk string
 		star, chunk, pattern = scanChunk(pattern)
+		// fmt.Printf("star=%v,chunk=%v,pattern=%v\n", star, chunk, pattern)
 		if star && chunk == "" {
 			// Trailing * matches rest of string.
 			return true
@@ -101,4 +102,3 @@ func matchChunk(chunk, s string) (rest string, ok bool) {
 	}
 	return s, true
 }
-

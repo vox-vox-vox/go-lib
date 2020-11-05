@@ -7,32 +7,25 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// var logger *zap.SugaredLogger
-var Glogger = GetLogger("ahui")
+// Global logger
+var Glogger = GetSugarLogger("project_name")
 
-// type LoggerX struct {
-// 	logger *zap.SugaredLogger
-// 	name   string
-// }
+func JsonEncode(data interface{}) string {
+	jsonBytes, _ := json.Marshal(data)
+	return (string(jsonBytes))
+}
 
-// func (lx *LoggerX) Debug(data interface{}) {
-// 	lx.logger.Debugw(lx.name, "log", data)
-// }
-// func (lx *LoggerX) Info(data interface{}) {
-// 	lx.logger.Infow(lx.name, "log", data)
-// }
-
-func GetLogger(name string) *zap.SugaredLogger {
+func GetSugarLogger(name string) *zap.SugaredLogger {
 	encoderConfig := zapcore.EncoderConfig{
-		TimeKey:       "time",
-		LevelKey:      "level",
-		NameKey:       "logger",
-		CallerKey:     "caller",
-		MessageKey:    "msg",
-		StacktraceKey: "stacktrace",
-		LineEnding:    zapcore.DefaultLineEnding,
-		EncodeLevel:   zapcore.LowercaseLevelEncoder,
-		EncodeTime:    zapcore.ISO8601TimeEncoder,
+		TimeKey:    "time",
+		LevelKey:   "level",
+		NameKey:    "logger",
+		CallerKey:  "caller",
+		MessageKey: "msg",
+		//StacktraceKey: "stacktrace",
+		LineEnding:  zapcore.DefaultLineEnding,
+		EncodeLevel: zapcore.CapitalLevelEncoder,
+		EncodeTime:  zapcore.ISO8601TimeEncoder,
 		// EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
@@ -47,7 +40,7 @@ func GetLogger(name string) *zap.SugaredLogger {
 		EncoderConfig:    encoderConfig,
 		InitialFields:    map[string]interface{}{},
 		OutputPaths:      []string{"stdout"},
-		ErrorOutputPaths: []string{"stderr"},
+		ErrorOutputPaths: []string{},
 	}
 	loggerRaw, _ := config.Build()
 	logger := loggerRaw.Named(name).Sugar()
@@ -55,15 +48,8 @@ func GetLogger(name string) *zap.SugaredLogger {
 	return logger
 }
 
-func JsonEncode(data interface{}) string {
-	jsonBytes, _ := json.Marshal(data)
-	return (string(jsonBytes))
-}
-
 func main() {
-	lx := GetLogger("root")
-	lx.Info("字符")
-	data := (map[string]interface{}{"key": "value"})
-	lx.Info(JsonEncode(data))
-	Glogger.Info(JsonEncode(data))
+	logger := GetSugarLogger("root")
+	data := (map[string]interface{}{"type": "DATAERROR"})
+	logger.Error(JsonEncode(data))
 }
