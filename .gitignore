@@ -5,6 +5,7 @@ tmp/
 test.db
 go.sum
 .vscode
+*.log
 
 go-debug/delve/debug
 
