@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-    "time"
     "encoding/json"
 )
 
@@ -11,12 +10,16 @@ type Stu struct {
 	Age  int
 }
 
+type Dict map[string]interface{}
+
 func main() {
-     m,_:= json.Marshal(map[string]interface{}{
+     m,_:= json.Marshal(Dict{
         "a":1,
         "k2":"b",
         "k3":false,
-        "time": time.Now(),
+        "time": Dict{
+            "a" : 222222,
+        },
     })
     fmt.Println(string(m))
 
