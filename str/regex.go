@@ -18,6 +18,7 @@ func compile(){
 func main() {
 	// Compile the expression once, usually at init time.
 	// Use raw strings to avoid having to quote the backslashes.
+    // go run regexp.go -h
     cmd := flag.String("cmd", "compile", "a string")
     flag.Parse()
     if *cmd == "compile" {
