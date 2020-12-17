@@ -3,12 +3,12 @@ import "fmt"
 import "github.com/thoas/go-funk"
 
 func main(){
-    a:=[]string{"a"}
-    b:=[]string{"a"}
+    a:=[]string{"a","d"}
+    b:=[]string{"a","b","c"}
     fmt.Println(b)
 
     res := funk.Contains(a,b) //false
     fmt.Println(res)
-    res = funk.Subset(a,b) //false
+    res = funk.Subset(a,b) //true
     fmt.Println(res)
 }

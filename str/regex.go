@@ -1,5 +1,7 @@
 package main
 
+// matched, err := regexp.Match(`foo.*`, []byte(`seafood`))
+// detail: https://golang.org/src/regexp/example_test.go
 import (
 	"fmt"
 	"regexp"
@@ -7,11 +9,17 @@ import (
 )
 
 func compile(){
-	var validID = regexp.MustCompile(`^[a-z]+\[[0-9]+\]$`)
-	fmt.Println(validID.MatchString("adam[23]"))  //true
+	var validID = regexp.MustCompile(`http(s)?://([\w\-]+\.hdmap\.momenta\.works|localhost|m)(:\d+)?$`)
+	fmt.Println(validID.MatchString("http://dev-pm-ui.hdmap.momenta.works"))  //true
 	fmt.Println(validID.MatchString("eve[7]"))
 	fmt.Println(validID.MatchString("Job[48]"))
 	fmt.Println(validID.MatchString("snakey"))
+
+
+    r := regexp.MustCompile(`\((?P<fatal>fatal: [^)]+)\)`)
+    res := r.FindStringSubmatch("(fatal: do not exists)     ")
+    fmt.Println("res:",res[0])
+    fmt.Println("res:",res[1])
 
 }
 

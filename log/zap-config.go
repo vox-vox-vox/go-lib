@@ -2,10 +2,15 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+func logTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(t.Format("2006-01-02T15:04:05.000000Z0700"))
+}
 
 func main() {
 	// 设置编码
@@ -18,7 +23,8 @@ func main() {
 		StacktraceKey: "stacktrace",
 		LineEnding:    zapcore.DefaultLineEnding,
 		EncodeLevel:   zapcore.LowercaseLevelEncoder, // 小写编码器
-		EncodeTime:    zapcore.ISO8601TimeEncoder,    // ISO8601 UTC 时间格式
+		// EncodeTime:    zapcore.ISO8601TimeEncoder,    // ISO8601 UTC 时间格式
+		EncodeTime: logTimeEncoder, // ISO8601 UTC 时间格式
 		// EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder, // 全路径编码器
@@ -44,7 +50,8 @@ func main() {
 		panic(fmt.Sprintf("log 初始化失败: %v", err))
 	}
 	// logger.log(zap.DebugLevel, "msg", nil, map[string]interface{}{"err": "error\tline"})
-	logger = logger.Named("name1")
+	logger = logger.Named("project")
+	logger.Sugar().Error("[MONITOR_LOG_TYPE=DATAERROR] 数据错误", "data")
 	logger.Sugar().Debugw("msg", "k1", map[string]interface{}{"err": "error\tline"}, "k2", map[string]interface{}{"name": "ahuigo"})
 	logger.Sugar().Debug(map[string]interface{}{"debug": "error\tline"})
 	logger.Sugar().Debugf("debugf: k1=%v, k2=%v", "k1", map[string]interface{}{"err": "error\tline"})

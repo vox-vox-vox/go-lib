@@ -2,10 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"time"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
+
+// logTimeEncoder -
+func logTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(t.Format("2006-01-02T15:04:05.000000Z0700"))
+}
 
 // Global logger
 var Glogger = GetSugarLogger("project_name")
@@ -17,15 +23,15 @@ func JsonEncode(data interface{}) string {
 
 func GetSugarLogger(name string) *zap.SugaredLogger {
 	encoderConfig := zapcore.EncoderConfig{
-		TimeKey:    "time",
-		LevelKey:   "level",
-		NameKey:    "logger",
-		CallerKey:  "caller",
-		MessageKey: "msg",
-		//StacktraceKey: "stacktrace",
-		LineEnding:  zapcore.DefaultLineEnding,
-		EncodeLevel: zapcore.CapitalLevelEncoder,
-		EncodeTime:  zapcore.ISO8601TimeEncoder,
+		TimeKey:       "time",
+		LevelKey:      "level",
+		NameKey:       "logger",
+		CallerKey:     "caller",
+		MessageKey:    "msg",
+		StacktraceKey: "stacktrace",
+		LineEnding:    zapcore.DefaultLineEnding,
+		EncodeLevel:   zapcore.CapitalLevelEncoder,
+		EncodeTime:    logTimeEncoder, //zapcore.ISO8601TimeEncoder,
 		// EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
@@ -50,6 +56,6 @@ func GetSugarLogger(name string) *zap.SugaredLogger {
 
 func main() {
 	logger := GetSugarLogger("root")
-	data := (map[string]interface{}{"type": "DATAERROR"})
-	logger.Error(JsonEncode(data))
+	data := (map[string]interface{}{"type": "[MONITOR_LOG_TYPE=DATAERROR]"})
+	logger.Error((data))
 }
