@@ -12,18 +12,24 @@ const ShellToUse = "bash"
 func Shellout() (error, string, string) {
     var stdout bytes.Buffer
     var stderr bytes.Buffer
-    cmd := exec.Command("sh", "-c", "echo 'sleep 3' && sleep 3 && echo 'sleep end';cmd-not-existed||echo ok")
+    //cmd := exec.Command("sh", "-c", "echo 'sleep 3' && sleep 3 && echo 'sleep end';cmd-not-existed||echo ok")
+    args := string[]{"sh","-c","exit 3"}
+    cmd := exec.Command(args...)
     cmd.Stdout = &stdout
     cmd.Stderr = &stderr
-    fmt.Println("start run:")
     err := cmd.Run() // cmd.Run() 内含cmd.Wait()
+
     return err, stdout.String(), stderr.String()
 }
 
 func main() {
     err, out, errout := Shellout()
     if err != nil {
-        log.Printf("error: %v\n", err)
+        if exitError, ok := err.(*exec.ExitError); ok {
+            fmt.Printf("shell ExitCode: %d\n", exitError.ExitCode())
+        }else{
+            log.Printf("\nerr=cmd.Run(); err=%v\n", err)
+        }
     }
     fmt.Println("--- stdout ---")
     fmt.Println(out)
