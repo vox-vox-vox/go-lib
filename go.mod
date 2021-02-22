@@ -13,7 +13,6 @@ require (
 	github.com/onsi/gomega v1.10.4 // indirect
 	github.com/spf13/viper v1.7.1 // indirect
 	github.com/thoas/go-funk v0.7.0
-	gitlab.momenta.works/hdmap-workflow/data-warehouse-go-sdk v0.0.6 // indirect
 	go.uber.org/zap v1.16.0
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 	gopkg.in/alessio/shellescape.v1 v1.0.0-20170105083845-52074bc9df61 // indirect

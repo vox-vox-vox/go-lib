@@ -10,10 +10,11 @@ import (
 
 func compile(){
 	var validID = regexp.MustCompile(`http(s)?://([\w\-]+\.hdmap\.momenta\.works|localhost|m)(:\d+)?$`)
-	fmt.Println(validID.MatchString("http://dev-pm-ui.hdmap.momenta.works"))  //true
-	fmt.Println(validID.MatchString("eve[7]"))
-	fmt.Println(validID.MatchString("Job[48]"))
-	fmt.Println(validID.MatchString("snakey"))
+	validID = regexp.MustCompile(`^([a-z\d]+-)?osm[a-z\d\-]+\.hdmap\.momenta\.works$`)
+	fmt.Println(validID.MatchString("osm3.hdmap.momenta.works"))  //true
+	fmt.Println(validID.MatchString("dev-osm3.hdmap.momenta.works"))  //true
+	fmt.Println(validID.MatchString("staging-osm3.hdmap.momenta.works"))  //true
+	fmt.Println(validID.MatchString("staging.osm3.hdmap.momenta.works"))  //true
 
 
     r := regexp.MustCompile(`\((?P<fatal>fatal: [^)]+)\)`)
