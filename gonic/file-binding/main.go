@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"mime/multipart"
 	"net/http"
-	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,11 +27,12 @@ func main() {
 			c.String(http.StatusBadRequest, fmt.Sprintf("err: %s", err.Error()))
 			return
 		}
+		fileHeader, _ := c.FormFile("file")
+		fmt.Printf("fileHeader.Filename:%#v", fileHeader.Filename)
 
 		// Save uploaded file
 		file := bindFile.File
-		dst := filepath.Base(file.Filename)
-		if err := c.SaveUploadedFile(file, dst); err != nil {
+		if err := c.SaveUploadedFile(file, "tmp/"+fileHeader.Filename); err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 			return
 		}
@@ -41,3 +41,5 @@ func main() {
 	})
 	router.Run(":8080")
 }
+
+// curl localhost:8080/upload -F file=@main.go -F name=ahuigo -F email=ahui@ahuigo.com
