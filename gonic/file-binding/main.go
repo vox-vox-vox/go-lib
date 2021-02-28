@@ -27,7 +27,7 @@ func main() {
 			c.String(http.StatusBadRequest, fmt.Sprintf("err: %s", err.Error()))
 			return
 		}
-		fileHeader, _ := c.FormFile("file")
+		fileHeader, _ := c.FormFile("file") //好像不用Close
 		fmt.Printf("fileHeader.Filename:%#v", fileHeader.Filename)
 
 		// Save uploaded file
