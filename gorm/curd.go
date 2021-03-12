@@ -40,6 +40,7 @@ func create() {
 func createStock() {
 	p := Stock{Code: "L1218", Price: 17}
 	db.Create(&p)
+	db.Create(&Stock{Code: "L1219", Price: 19})
 }
 
 // update
@@ -52,10 +53,15 @@ func updateStock() {
 // read
 func selectStock() {
 	var stock Stock
-	db.First(&stock) // 查询id为1的product
-	fmt.Println(stock)
 	db.First(&stock, "code = ?", "L1217")
 	fmt.Println(stock)
+
+    //可以是指针、其它类名
+    // stocks :=  []*Stock{}
+    type S struct{Code string}
+    stocks :=  []*S{}
+    db.Raw("select * from stocks limit 2").Scan(&stocks)
+	fmt.Println(*stocks[0])
 }
 
 func main() {
