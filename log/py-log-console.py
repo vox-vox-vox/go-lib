@@ -31,7 +31,7 @@ def getLogger(name='root', level=logging.INFO):
         logging.root.removeHandler(handler)
 
     ch = logging.StreamHandler()
-    ch = logging.StreamHandler(sys.stdout)
+    #ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(level)
     #ch.setFormatter(logging.Formatter(formatmsg))
     ch.setFormatter(formatter)

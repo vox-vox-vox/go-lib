@@ -1,1 +1,4 @@
-go test -run '^TestKillGroup$'
+testkill:
+	go test -run '^TestKillGroup$'
+testsignal:
+	go test  singal*.go

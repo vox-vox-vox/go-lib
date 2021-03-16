@@ -13,6 +13,7 @@ import (
 )
 
 func TestSignalTerminal(t *testing.T) {
+    log.Println("start test...")
 	defer func() {
 		log.Println("uploading output")
 	}()
