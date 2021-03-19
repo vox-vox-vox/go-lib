@@ -37,7 +37,9 @@ def getLogger(name='root', level=logging.INFO):
     ch.setFormatter(formatter)
 
     logger = logging.getLogger(name)
+    logger.handlers.clear()
     logger.addHandler(ch)
+    logger.propagate = False
     return logger
 
 
