@@ -11,6 +11,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible // indirect
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.4 // indirect
+	github.com/radovskyb/watcher v1.0.7
 	github.com/spf13/viper v1.7.1 // indirect
 	github.com/thoas/go-funk v0.7.0
 	go.uber.org/zap v1.16.0
