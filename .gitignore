@@ -1,9 +1,13 @@
 godemo/
 /log/logs
 gonic/tmp
+tmp
 test.db
 go.sum
 .vscode
+*.log
+
+go-debug/delve/debug
 
 
 # Binaries for programs and plugins
@@ -20,4 +24,5 @@ go.sum
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-
+a.go
+hello

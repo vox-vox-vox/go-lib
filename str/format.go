@@ -27,4 +27,5 @@ func main() {
 
 	s ,_:= String(tmpl).Format(data)
 	fmt.Println(s)
+	fmt.Println("length=", len("1中"))
 }

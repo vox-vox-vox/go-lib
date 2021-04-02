@@ -1,8 +1,0 @@
-FROM golang:1.12.7-alpine3.10
-
-RUN mkdir /build/
-WORKDIR /build/
-# build micro-service binary
-COPY main.go /build/main.go
-RUN go build -o /server main.go
-ENTRYPOINT ["/server"]

@@ -25,7 +25,7 @@ func main() {
 		}
 
 		filename := filepath.Base(file.Filename)
-		if err := c.SaveUploadedFile(file, filename); err != nil {
+		if err := c.SaveUploadedFile(file, "./tmp/"+filename); err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 			return
 		}
