@@ -4,5 +4,5 @@ import "fmt"
 func main() {
     fmt.Println("msg!!!!")
     println("error!")
-    time.Sleep(20*time.Second)
+    time.Sleep(1*time.Second)
 }
