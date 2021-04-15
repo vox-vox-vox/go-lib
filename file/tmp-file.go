@@ -9,6 +9,6 @@ func main(){
     if err!=nil{
         fmt.Println(err)
     }else{
-        fmt.Println("crate file:", file)
+        fmt.Printf("create file:%#v\n", file.Name())
     }
 }
