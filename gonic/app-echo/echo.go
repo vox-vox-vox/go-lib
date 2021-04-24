@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+    "flag"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,7 +39,10 @@ func main() {
 	})
 
 	// Handle all requests using net/http
-	r.Run(":8088")
+    port := flag.String("p", "8090", "Public Server Port")
+    flag.Parse()
+
+	r.Run(":"+*port)
 	//http.Handle("/", r)
 }
 
