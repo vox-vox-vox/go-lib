@@ -10,15 +10,21 @@ type User struct{
 
 func main() {
     m := make(map[string]interface{})
-  go func() {
-      for {
-        time.Sleep(1)
-        m["abc"] = 134
-        time.Sleep(1)
-        m["abc"] = User{}
-      }
-  }()
+    //并发写：fatal error: concurrent map writes
+      go func() {
+          for {
+            m["abc"] = 134
+            time.Sleep(1)
+          }
+      }()
+      go func() {
+          for {
+            m["abc"] = User{}
+            time.Sleep(1)
+          }
+      }()
 
+    // 读和写引发: fatal error: concurrent map iteration and map write
       for {
         time.Sleep(1*time.Second)
           fmt.Println(m)
