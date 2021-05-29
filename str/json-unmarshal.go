@@ -28,20 +28,35 @@ type Family struct{
 
 func main() {
     testMemberCase()
+    testSlice()
     testPointer()
 }
 
+// testMemberCase
 func testMemberCase(){
     var family Family
 	fmt.Println("0. unmarshal could not pass lower case member:")
     json.Unmarshal([]byte(`{"father":"fa","mother":"mo","friend":"fri","son":"son","Son":"Son","dau":"dau","other":"other" }`), &family)
-	fmt.Printf("family:%#v\n", family)
+	fmt.Printf("family:%#v\n\n", family)
 }
+
+// testSlice
+func testSlice(){
+	fmt.Println("21. unmarshal slice failed:")
+    var s []int
+    json.Unmarshal([]byte(`[1,2,3]`), s)
+	fmt.Printf("parse slice failed:%#v\n", s)
+    json.Unmarshal([]byte(`[1,2,3]`), &s)
+	fmt.Printf("parse &slice ok:%#v\n", s)
+    fmt.Println("")
+}
+
+// testPointer
 func testPointer(){
 	var stu *A
 	// 1. 不能直接访问nil pointer： stu.Name = "ahui"
 	// 2. &stu 是指向指针的指针
-	fmt.Println("\n1.unmarshal could pass partial value:")
+	fmt.Println("1.unmarshal could pass partial value:")
     err := json.Unmarshal([]byte(`{"name":"ahui","age":"20", "other":1}`), &stu)
 	fmt.Println("err:", err, ",stu:", stu)
 
