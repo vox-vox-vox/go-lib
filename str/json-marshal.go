@@ -24,6 +24,11 @@ func main() {
     fmt.Println(string(m))
 
     stu := Stu{"ahui", 20}
-     m,_= json.Marshal(stu)
+    m,_= json.Marshal(stu)
+    fmt.Println(string(m))
+    // json 不用转
+    fmt.Println("json(interface):")
+    var stuI interface{}=stu
+    m,_= json.Marshal(stuI)
     fmt.Println(string(m))
 }

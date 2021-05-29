@@ -10,10 +10,13 @@ import (
 func TestFoo(t *testing.T) {
 	defer gock.Off()
 
+	// mock response
 	gock.New("http://m.com").
 		Get("/bar").
 		Reply(200).
 		JSON(map[string]string{"foo": "bar"})
+
+	// send request
 	resp, err := requests.Get("http://m.com/bar")
 	if err != nil {
 		t.Fatal(err)

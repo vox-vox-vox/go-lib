@@ -8,6 +8,7 @@ go.sum
 *.log
 
 go-debug/delve/debug
+__debug_bin
 
 
 # Binaries for programs and plugins
