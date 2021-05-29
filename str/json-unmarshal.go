@@ -15,23 +15,40 @@ type Task struct {
 	Age  string `json:"age"`
 }
 
+type Family struct{
+    // no work
+    father string
+    mother string   `json:"mother"`
+    Friend1 string `json:friend`
+    // work
+    Other string `json:other`    //json:other 依然有效
+    Son string      //对于大写成员，默认为`json:"son"`
+    Daughter string `json:"DAU"`    //json大小写不敏感
+}
 
 func main() {
-	data := t()
-	fmt.Println(data)
+    testMemberCase()
+    testPointer()
 }
-func t() *A {
+
+func testMemberCase(){
+    var family Family
+	fmt.Println("0. unmarshal could not pass lower case member:")
+    json.Unmarshal([]byte(`{"father":"fa","mother":"mo","friend":"fri","son":"son","Son":"Son","dau":"dau","other":"other" }`), &family)
+	fmt.Printf("family:%#v\n", family)
+}
+func testPointer(){
 	var stu *A
 	// 1. 不能直接访问nil pointer： stu.Name = "ahui"
 	// 2. &stu 是指向指针的指针
-	fmt.Println("1. unmarshal只更新局部属性:")
-	err := json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &stu)
+	fmt.Println("\n1.unmarshal could pass partial value:")
+    err := json.Unmarshal([]byte(`{"name":"ahui","age":"20", "other":1}`), &stu)
 	fmt.Println("err:", err, ",stu:", stu)
 
 	err = json.Unmarshal([]byte(`{"age":"21"}`), &stu)
 	fmt.Println("err:", err, ",stu:", stu)
 
-	fmt.Println("\n2. 要传真指针&obj--而不是obj或nil-----------------")
+    fmt.Println("\n2.if we pass value: obj/nil(no pointer &obj), we could not get value:")
 	var obj *map[string]interface{}
 	err = json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), obj)
 	fmt.Println("err:", err, ",*obj->obj:", obj)
@@ -40,6 +57,7 @@ func t() *A {
 	err = json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), obj3)
 	fmt.Println("err:", err, ",obj3->obj:", obj3)
 
+    fmt.Println("\n3.We should pass pointer: pointer &obj")
 	var obj2 *map[string]interface{}
 	err = json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &obj2)
 	fmt.Println("err:", err, ",*obj2->&obj:", obj2)
@@ -48,17 +66,19 @@ func t() *A {
 	err = json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &obj4)
 	fmt.Println("err:", err, ",obj4->&obj:", obj4)
 
-	fmt.Printf("\n3. infObj:--------\n")
+    fmt.Println("\n4.We should pass pointer: &interface{}")
 	var infObj interface{}
 	json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &infObj)
 	fmt.Printf("infObj:%+v\n", infObj)
 	fmt.Printf("infObj[name]:%+v\n", infObj.(map[string]interface{})["name"])
 
-
-	fmt.Printf("\n4. tasks:--------\n")
+    fmt.Println("\n5.We should pass pointer: &([]*Task)")
     tasks :=  []*Task{}
 	json.Unmarshal([]byte(`[{"name":"ahui","age":"20"}]`), &tasks)
 	fmt.Printf("tasks:%+v\n", *(tasks[0]))
 
-	return stu
+    fmt.Println("\n6.We should pass pointer: &([]Task)")
+    tasks2 :=  []Task{}
+	json.Unmarshal([]byte(`[{"name":"ahui","age":"22"}]`), tasks2)
+	fmt.Printf("tasks2:%+v\n", (tasks2))
 }
