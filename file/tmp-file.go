@@ -1,14 +1,32 @@
 package main
 import "io/ioutil"
 import "os"
-import "fmt"
+import (
+    "fmt"
+    //"path/filepath"
+)
 
-func main(){
-    os.Mkdir("tmp", 0700)
-    file, err := ioutil.TempFile("tmp", "prefix")
+
+func createTempFile(dir string) error{
+    //dir := filepath.Split(path)
+    os.MkdirAll(dir, os.ModePerm)
+    file, err := ioutil.TempFile(dir, "tmp_")
     if err!=nil{
-        fmt.Println(err)
+        return err
     }else{
         fmt.Printf("create file:%#v\n", file.Name())
     }
+    return err
+    //defer os.Remove(file.Name())
+}
+
+
+func main(){
+    os.Mkdir("tmp", 0700)
+    path := "tmp/a/b/c/d"
+    err := createTempFile(path)
+    if err!=nil{
+        panic(err)
+    }
+
 }
