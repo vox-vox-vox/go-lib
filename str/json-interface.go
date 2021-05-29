@@ -7,33 +7,28 @@ import (
 
 type A interface{}
 
-func main() {
-	t()
-	//fmt.Println(data)
+
+type Task struct{
+    name string
 }
-func t() A {
+type Data struct{
+    tasks *[]Task
+    Age int
+}
+
+
+func main() {
 	var infObj interface{}
-	fmt.Printf("interface{}:\n")
+    // example1
+	fmt.Printf("example1:\n")
 	json.Unmarshal([]byte(`{"name":"ahui","age":"20"}`), &infObj)
 	fmt.Printf("infObj:%+v\n", infObj)
 	fmt.Printf("infObj[name]:%+v\n", infObj.(map[string]interface{})["name"])
 
-    type Task struct{
-        name string
-    }
-    var tasks []Task
-    data := struct{
-        data *[]Task
-        Age int
-    }{
-        data:&tasks,
-    }
-    rawbody := []byte(`{"data":[{"name":"hilojack"}], "Age":2}`)
+
+    // example2
+	fmt.Printf("\n2nd Umarshal:\n")
+    rawbody := []byte(`{"tasks":[{"name":"hilojack"}], "Age":2}`)
     json.Unmarshal(rawbody, &infObj)
 	fmt.Printf("infObj:%+v\n", infObj)
-    err:=json.Unmarshal(rawbody, &data)
-    fmt.Printf("data:%+v, err:%v\n", data, err)
-	fmt.Printf("tasks:%+v\n", tasks)
-
-	return infObj
 }

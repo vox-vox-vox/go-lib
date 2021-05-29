@@ -30,6 +30,7 @@ func main() {
 
 		// handler
 		sendCookie(c)
+        sendHeaders(c)
 
 		// body
 		buf, _ := ioutil.ReadAll(c.Request.Body)
@@ -64,6 +65,11 @@ func sortHeaders(c *gin.Context) *[][2]string {
 		}
 	}
 	return &headers
+}
+
+func sendHeaders(c *gin.Context){
+    c.Writer.Header().Set("Remote", "echo-server by ahuigo")
+    c.Writer.Header().Set("Location", "http://baidu1.com")
 }
 
 func sendCookie(c *gin.Context) {

@@ -9,6 +9,10 @@ func test() {
     }()
     panic("test panic1")
 }
-func main() {
+
+func parent(){
     test()
+}
+func main() {
+    parent()
 }
