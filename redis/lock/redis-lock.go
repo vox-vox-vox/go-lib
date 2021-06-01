@@ -22,6 +22,9 @@ func main() {
 	locker := redislock.New(client)
 
 	ctx := context.Background()
+	fmt.Println("ctx:", ctx)
+	fmt.Printf("ctx:%#v\n", ctx)
+	fmt.Printf("ctx:%#v\n", ctx)
 
 	// Try to obtain lock.
 	lock, err := locker.Obtain(ctx, "my-key", 10*time.Second, nil)
