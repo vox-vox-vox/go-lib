@@ -8,7 +8,7 @@ import (
 // go-lib/goroutine/race-string.go
 const (
   FIRST  = "WHAT THE Fuck"
-  SECOND = "F*CK 123456 89 abcdef"
+  SECOND = "F*CK"
 )
 
 func main() {
