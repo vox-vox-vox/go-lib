@@ -1,52 +1,43 @@
-package main
+package server
 
 import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
-    "flag"
 
 	"github.com/gin-gonic/gin"
+
 )
 
-// This function's name is a must. App Engine uses it to drive the requests properly.
-func main() {
-	// Starts a new Gin instance with no middle-ware
-	r := gin.New()
-
-	// Define your handlers
-	r.Any("/*anypath", func(c *gin.Context) {
-		// header
-		res := c.Request.Method + " " +
-			c.Request.Host +
-			c.Request.URL.Path + "?" + c.Request.URL.RawQuery + " " + c.Request.Proto + " " +
-			c.ClientIP() + "\n"
-		headers := sortHeaders(c)
-		for _, kv := range *headers {
-			res += kv[0] + ": " + kv[1] + "\n"
-		}
-		res += "\n"
-
-		// handler
-		sendCookie(c)
-        sendHeaders(c)
-
-		// body
-		buf, _ := ioutil.ReadAll(c.Request.Body)
-		res += string(buf)
-
-		c.String(http.StatusOK, res)
-	})
-
-	// Handle all requests using net/http
-    port := flag.String("p", "8090", "Public Server Port")
-    flag.Parse()
-
-	r.Run(":"+*port)
-	//http.Handle("/", r)
+// EchoHandler _
+func EchoServer(c *gin.Context){
+	sendCookie(c)
+    sendHeaders(c)
+    sendBody(c)
 }
 
+// sendBody
+func sendBody(c *gin.Context){
+    // header
+    res := c.Request.Method + " " +
+        c.Request.Host +
+        c.Request.URL.Path + "?" + c.Request.URL.RawQuery + " " + c.Request.Proto + " " +
+        c.ClientIP() + "\n"
+    headers := sortHeaders(c)
+    for _, kv := range *headers {
+        res += kv[0] + ": " + kv[1] + "\n"
+    }
+    res += "\n"
+    // body
+    buf, _ := ioutil.ReadAll(c.Request.Body)
+    res += string(buf)
+
+    c.String(http.StatusOK, res)
+
+}
+
+// sortHeaders
 func sortHeaders(c *gin.Context) *[][2]string {
 	headers := [][2]string{}
 	for k, vs := range c.Request.Header {
@@ -67,11 +58,14 @@ func sortHeaders(c *gin.Context) *[][2]string {
 	return &headers
 }
 
+
+// sendHeaders
 func sendHeaders(c *gin.Context){
     c.Writer.Header().Set("Remote", "echo-server by ahuigo")
-    c.Writer.Header().Set("Location", "http://baidu1.com")
+    //c.Writer.Header().Set("Location", "http://baidu1.com")
 }
 
+// sendCookie
 func sendCookie(c *gin.Context) {
 	// c.Request.URL.
 	hostname := strings.Split(c.Request.Host, ":")[0]

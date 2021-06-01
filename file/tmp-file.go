@@ -1,22 +1,16 @@
 package main
-import "io/ioutil"
-import "os"
 import (
-    "fmt"
+    "io/ioutil"
+    "os"
     //"path/filepath"
 )
 
 
-func createTempFile(dir string) error{
+func createTempFile(dir string) (file *os.File, err error){
     //dir := filepath.Split(path)
     os.MkdirAll(dir, os.ModePerm)
-    file, err := ioutil.TempFile(dir, "tmp_")
-    if err!=nil{
-        return err
-    }else{
-        fmt.Printf("create file:%#v\n", file.Name())
-    }
-    return err
+    file, err = ioutil.TempFile(dir, "tmp_")
+    return
     //defer os.Remove(file.Name())
 }
 
@@ -24,9 +18,10 @@ func createTempFile(dir string) error{
 func main(){
     os.Mkdir("tmp", 0700)
     path := "tmp/a/b/c/d"
-    err := createTempFile(path)
+    file, err := createTempFile(path)
     if err!=nil{
         panic(err)
     }
+    println("Succssfully create file: ", file.Name())
 
 }

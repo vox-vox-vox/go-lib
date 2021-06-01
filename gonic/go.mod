@@ -3,6 +3,7 @@ module github.com/gin-gonic/examples
 go 1.12
 
 require (
+	github.com/DeanThompson/ginpprof v0.0.0-20201112072838-007b1e56b2e1
 	github.com/dustin/go-broadcast v0.0.0-20171205050544-f664265f5a66
 	github.com/gin-gonic/autotls v0.0.0-20190904071645-689297a2fe35
 	github.com/gin-gonic/gin v1.4.0

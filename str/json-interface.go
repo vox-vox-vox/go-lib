@@ -28,7 +28,6 @@ func main() {
 
     // example2
 	fmt.Printf("\n2nd Umarshal:\n")
-    rawbody := []byte(`{"tasks":[{"name":"hilojack"}], "Age":2}`)
-    json.Unmarshal(rawbody, &infObj)
-	fmt.Printf("infObj:%+v\n", infObj)
+    err:=json.Unmarshal([]byte(`{"name":"ahui2","age":"21"}`), &infObj)
+	fmt.Printf("infObj:%+v, err=%v\n", infObj, err)
 }
