@@ -1,19 +1,20 @@
 package main
-import (
-  "fmt"
-  "time"
-  "log"
-  "context"
 
-  "github.com/bsm/redislock"
-  "github.com/go-redis/redis/v8"
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	"github.com/bsm/redislock"
+	"github.com/go-redis/redis/v8"
 )
 
 func main() {
 	// Connect to redis.
 	client := redis.NewClient(&redis.Options{
-		Network:	"tcp",
-		Addr:		"redis:6379",
+		Network: "tcp",
+		Addr:    "redis:6379",
 	})
 	defer client.Close()
 
@@ -23,9 +24,9 @@ func main() {
 	ctx := context.Background()
 
 	// Try to obtain lock.
-	lock, err := locker.Obtain(ctx, "my-key", 100*time.Millisecond, nil)
+	lock, err := locker.Obtain(ctx, "my-key", 10*time.Second, nil)
 	if err == redislock.ErrNotObtained {
-		fmt.Println("Could not obtain lock!")
+		log.Fatalln("Could not obtain lock!")
 	} else if err != nil {
 		log.Fatalln(err)
 	}
@@ -35,7 +36,7 @@ func main() {
 	fmt.Println("I have a lock!")
 
 	// Sleep and check the remaining TTL.
-	time.Sleep(50 * time.Millisecond)
+	time.Sleep(5 * time.Second)
 	if ttl, err := lock.TTL(ctx); err != nil {
 		log.Fatalln(err)
 	} else if ttl > 0 {
@@ -43,12 +44,12 @@ func main() {
 	}
 
 	// Extend my lock.
-	if err := lock.Refresh(ctx, 100*time.Millisecond, nil); err != nil {
+	if err := lock.Refresh(ctx, 10*time.Second, nil); err != nil {
 		log.Fatalln(err)
 	}
 
 	// Sleep a little longer, then check.
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(10 * time.Second)
 	if ttl, err := lock.TTL(ctx); err != nil {
 		log.Fatalln(err)
 	} else if ttl == 0 {
