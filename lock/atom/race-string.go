@@ -7,7 +7,7 @@ import (
 // 交替打印字符
 // go-lib/goroutine/race-string.go
 const (
-  FIRST  = "WHAT THE Fuck"
+  FIRST  = "Hello world!"
   SECOND = "F*CK"
 )
 
@@ -28,14 +28,11 @@ func main() {
   }()
 
   for {
-      if (s==FIRST || s==SECOND){
+      s1:=s
+      if (s1==FIRST || s1==SECOND){
         fmt.Println(s)
-          fmt.Printf("first string:%v\n",s==FIRST)
-          fmt.Printf("second string:%v\n",s==SECOND)
       }else{
-          fmt.Printf("---------------\nlast string:%v\n",s)
-          fmt.Printf("first string:%v\n",s==FIRST)
-          fmt.Printf("second string:%v\n",s==SECOND)
+          fmt.Printf("---------------\nlast string:%v\n",s1)
           panic("err string")
       }
     time.Sleep(10)

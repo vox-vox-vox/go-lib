@@ -7,33 +7,32 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-
 )
 
 // EchoHandler _
-func EchoServer(c *gin.Context){
+func EchoServer(c *gin.Context) {
 	sendCookie(c)
-    sendHeaders(c)
-    sendBody(c)
+	sendHeaders(c)
+	sendBody(c)
 }
 
 // sendBody
-func sendBody(c *gin.Context){
-    // header
-    res := c.Request.Method + " " +
-        c.Request.Host +
-        c.Request.URL.Path + "?" + c.Request.URL.RawQuery + " " + c.Request.Proto + " " +
-        c.ClientIP() + "\n"
-    headers := sortHeaders(c)
-    for _, kv := range *headers {
-        res += kv[0] + ": " + kv[1] + "\n"
-    }
-    res += "\n"
-    // body
-    buf, _ := ioutil.ReadAll(c.Request.Body)
-    res += string(buf)
+func sendBody(c *gin.Context) {
+	// header
+	res := c.Request.Method + " " +
+		c.Request.Host +
+		c.Request.URL.Path + "?" + c.Request.URL.RawQuery + " " + c.Request.Proto + " " +
+		c.ClientIP() + "\n"
+	headers := sortHeaders(c)
+	for _, kv := range *headers {
+		res += kv[0] + ": " + kv[1] + "\n"
+	}
+	res += "\n"
+	// body
+	buf, _ := ioutil.ReadAll(c.Request.Body)
+	res += string(buf)
 
-    c.String(http.StatusOK, res)
+	c.String(http.StatusOK, res)
 
 }
 
@@ -58,11 +57,10 @@ func sortHeaders(c *gin.Context) *[][2]string {
 	return &headers
 }
 
-
 // sendHeaders
-func sendHeaders(c *gin.Context){
-    c.Writer.Header().Set("Remote", "echo-server by ahuigo")
-    //c.Writer.Header().Set("Location", "http://baidu1.com")
+func sendHeaders(c *gin.Context) {
+	c.Writer.Header().Set("Remote", "echo-server by ahuigo")
+	//c.Writer.Header().Set("Location", "http://baidu1.com")
 }
 
 // sendCookie
