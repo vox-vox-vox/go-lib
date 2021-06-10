@@ -13,6 +13,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3 // indirect
 	github.com/go-ldap/ldap/v3 v3.2.4
 	github.com/go-redis/redis v6.15.9+incompatible // indirect
+	github.com/go-redis/redis/v7 v7.4.0 // indirect
 	github.com/h2non/gock v1.0.13 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
 	github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32 // indirect

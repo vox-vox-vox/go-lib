@@ -18,6 +18,7 @@ func EchoServer(c *gin.Context) {
 
 // sendBody
 func sendBody(c *gin.Context) {
+    println(c.Request.URL.Path + "?" + c.Request.URL.RawQuery)
 	// header
 	res := c.Request.Method + " " +
 		c.Request.Host +
