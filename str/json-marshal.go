@@ -8,6 +8,7 @@ import (
 type Stu struct {
 	Name string `json:"name"`
 	Age  int
+	height  int
 }
 
 type Dict map[string]interface{}
@@ -21,14 +22,14 @@ func main() {
             "a" : 222222,
         },
     })
-    fmt.Println(string(m))
+    fmt.Println("Marshal map with lowercase:",string(m))
 
-    stu := Stu{"ahui", 20}
+    stu := Stu{"ahui", 20, 100}
     m,_= json.Marshal(stu)
-    fmt.Println(string(m))
+    fmt.Println("Warn: Marshal struct will ignore lowercase:", string(m))
     // json 不用转
-    fmt.Println("json(interface):")
     var stuI interface{}=stu
     m,_= json.Marshal(stuI)
+    fmt.Println("json(interface):")
     fmt.Println(string(m))
 }
