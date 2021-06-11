@@ -10,6 +10,8 @@ func main() {
 
     <-timer1.C
     fmt.Println("Timer 1 ")
+    timer1.Stop()
+    timer1.Stop()
     // 只能用一次<-timer1.C
     //fmt.Println("Timer 1 ")
 
