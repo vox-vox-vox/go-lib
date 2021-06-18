@@ -24,5 +24,6 @@ func main() {
             Description: "Cool",
         },
 	}
-	fmt.Printf("%#v", person)
+	fmt.Printf("%#v\n", person)
+    fmt.Printf("age:%#v", person.Age) //0
 }

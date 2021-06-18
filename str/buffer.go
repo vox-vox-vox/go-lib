@@ -10,15 +10,22 @@ import (
 )
 
 
+func bufferNew(){
+    buf := new(bytes.Buffer)
+    buf.WriteString("new")
+    println(buf.String())
+}
+
 func main() {
+    bufferNew()
 
     //等价
-    buf1 := bytes.NewBufferString("hello")
+   buf1 := bytes.NewBufferString("hello")
    buf2 := bytes.NewBuffer([]byte("hello"))
     var buf3 bytes.Buffer
 
    buf3.Write([]byte("hello ahui world"))
-       buf3.WriteString(" world2")
+   buf3.WriteString(" world2")
 
    buf4 := bytes.NewBufferString("abc")
    buf5 := bytes.NewBuffer([]byte{})
