@@ -1,5 +1,5 @@
 start:
-	go run gin-pprof.go
+	arun	go run gin-pprof.go
 
 benchcpu:
 	go-wrk  -d=50 -c=50  http://localhost:4500/cpu/5

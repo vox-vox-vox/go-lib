@@ -13,6 +13,7 @@ func Register(r *gin.Engine) {
 	r.Any("/echo/*anypath", EchoServer)
 	r.GET("/sleep/:second", sleepFunc)
 	r.GET("/cpu/:second", cpuFunc)
+	fileRouter(r)
 }
 
 func cpuFunc(c *gin.Context) {
