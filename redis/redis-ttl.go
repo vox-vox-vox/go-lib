@@ -15,7 +15,7 @@ func main() {
 	err := client.Set("key", "value", time.Duration(1000*1000)).Err()
     println(err)
 
-	val, err := client.TTL("key").Result()
+	val, err := client.TTL("key").Result() //-1 if no ttl, -2 if expired
 	if err != nil {
 		panic(err)
 	}
