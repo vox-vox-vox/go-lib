@@ -56,12 +56,18 @@ func selectStock() {
 	db.First(&stock, "code = ?", "L1217")
 	fmt.Println(stock)
 
-    //可以是指针、其它类名
+    //可以是指针数组
     // stocks :=  []*Stock{}
     type S struct{Code string}
     stocks :=  []*S{}
     db.Raw("select * from stocks limit 2").Scan(&stocks)
-	fmt.Println(*stocks[0])
+    fmt.Println("read stock:", *stocks[0])
+
+    //也可以纯指针
+    sp:= &S{}
+    db.Raw("select * from stocks limit 2").Scan(sp)
+    fmt.Println("read stockp:", *sp)
+
 }
 
 func main() {
