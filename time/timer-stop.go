@@ -15,9 +15,11 @@ func main() {
             count +=1
             fmt.Println("Timer count: ",count)
             if count==2{
-                fmt.Println("Timer reset 2,",count)
-                timer.Reset(-2*time.Millisecond)
-                time.Sleep(time.Second)
+                //timer.Reset(150*time.Millisecond)//will stop
+                timer.Reset(50*time.Millisecond)//not stop
+                fmt.Println("Timer sleep 2(0),",count)
+                time.Sleep(500*time.Millisecond)
+                fmt.Println("Timer sleep 2(1),",count)
                 continue
             }
             if count>=3{
@@ -28,11 +30,12 @@ func main() {
         }
         fmt.Println("Timer quit: ",count)
     }()
-    time.Sleep(500*time.Millisecond)
-    println("sleep stop")
-    timer.Stop()
+    time.Sleep(2100*time.Millisecond)
+    fmt.Printf("sleep stop before: 1\n")
+    timer.Stop() //调用 <-timer.C (期间)会stop 协程(timer内ttl需要大于0)
+    fmt.Printf("sleep stop after: 2\n")
 
-    time.Sleep(2000 *time.Second)
+    time.Sleep(5 *time.Second)
     println("quit")
 
 }

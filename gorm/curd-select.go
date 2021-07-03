@@ -43,30 +43,11 @@ func createStock() {
 	db.Create(&Stock{Code: "L1219", Price: 19})
 }
 
-// update
-func updateStock() {
-	p := Stock{Code: "L1217", Price: 19}
-	db.Model(&p).Update(&p)
-	//db.Model(&product).Update("Price", 22)
-}
-
-// read raw
+// read
 func selectStock() {
-	var stock Stock
-	db.First(&stock, "code = ?", "L1217")
-	fmt.Println(stock)
-
-    //可以是指针数组
-    // stocks :=  []*Stock{}
-    type S struct{Code string}
-    stocks :=  []*S{}
-    db.Raw("select * from stocks limit 2").Scan(&stocks)
-    fmt.Println("read stock:", *stocks[0])
-
-    //也可以纯指针
-    sp:= &S{}
-    db.Raw("select * from stocks limit 2").Scan(sp)
-    fmt.Println("read stockp:", *sp)
+    stocks :=  []*Stock{}
+    err := db.Where("price%20=?", 0).Select([]string{"code"}).Limit(10).Find(&stocks).Error
+    fmt.Println("read stocks:", len(stocks), err)
 
 }
 
@@ -85,12 +66,8 @@ func main() {
 	db.AutoMigrate(&Product{})
 	db.AutoMigrate(&Stock{})
 	createStock()
-	updateStock()
 	selectStock()
 
 	defer db.Close()
 }
 
-/*
-
- */
