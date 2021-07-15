@@ -38,5 +38,6 @@ func longRun(seconds int) int {
 func sleepFunc(c *gin.Context) {
 	seconds, _ := strconv.Atoi(c.Param("second"))
 	time.Sleep(time.Duration(seconds) * time.Second)
+    fmt.Printf("%vs passed!\n", seconds)
 	c.JSON(http.StatusOK, "sleep second: "+c.Param("second"))
 }
