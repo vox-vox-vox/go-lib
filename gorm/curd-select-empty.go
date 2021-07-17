@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -46,8 +47,11 @@ func createStock() {
 // read
 func selectStock() {
     stock :=  &Stock{}
-    err := db.Where("price%20=?", 100).Select([]string{"code"}).Limit(10).Find(stock).Error
-    fmt.Println("read stock:", *stock, err)
+    cursor:= db.Where("price%20=?", 100).Select([]string{"code"}).Limit(10).Find(stock)
+    err := cursor.Error
+    fmt.Println("read empty stock:", *stock, err)
+    fmt.Println("read empty stock(record not found): ", strings.Contains(err.Error(),"record not found"))
+    fmt.Println("read r.RowsAffected > 0: ", db.Where("price%20=?", 17).Select([]string{"code"}).Limit(10).Find(stock).RowsAffected > 0)
 
 }
 
