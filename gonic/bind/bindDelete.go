@@ -12,10 +12,11 @@ type UserReq struct {
 /**
 nc -l 8088
 # work
-curl -X DELETE ':8088' -F 'password=ahui1'
-# not work
-curl  -X DELETE -H 'Content-Type: application/x-www-form-urlencoded' ':8088' -d 'password=ahui1'
+curl -X DELETE 'https://httpbin.org/delete' -d 'password=pass'
+curl -X DELETE ':8088' -F 'password=pass'
 
+# not work
+curl  -X DELETE -H 'Content-Type: application/x-www-form-urlencoded' ':8088' -d 'password=pass'
  */
 func main() {
     router := gin.Default()
