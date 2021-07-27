@@ -36,6 +36,7 @@ func createStock() {
 // update
 func updateStock() {
 	p := Stock{Code: "L1217", Price: 19}
+	db.Model(&p).Where(&p).Find(&p)
 	db.Model(&p).Where("code=?","1").Where("price>? or price<?", 1,100).Update(&p)
 }
 
