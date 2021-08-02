@@ -7,7 +7,6 @@ require (
 	github.com/alessio/shellescape v1.4.1 // indirect
 	github.com/codemodus/parth v1.1.3 // indirect
 	github.com/creack/pty v1.1.11
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/docker/docker v20.10.5+incompatible
 	github.com/domac/playflame v0.0.0-20170101231248-6b2df91f0198 // indirect
 	github.com/gin-gonic/gin v1.6.3 // indirect
@@ -16,6 +15,7 @@ require (
 	github.com/go-redis/redis/v7 v7.4.0 // indirect
 	github.com/h2non/gock v1.0.13 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
+	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/nbio/st v0.0.0-20140626010706-e9e8d9816f32 // indirect
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.4 // indirect

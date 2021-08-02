@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+    "time"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -18,6 +19,8 @@ type Product struct {
 type Stock struct {
 	Code  string `gorm:"primary_key" `
 	Price uint
+    CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type User struct {
@@ -38,15 +41,18 @@ func create() {
 
 // 创建
 func createStock() {
-	p := Stock{Code: "L1218", Price: 17}
+	p := Stock{Code: "L1", Price: 1}
 	db.Create(&p)
-	db.Create(&Stock{Code: "L1219", Price: 19})
+	db.Create(&Stock{Code: "L2", Price: 2})
 }
 
 // update
 func updateStock() {
-	p := Stock{Code: "L1217", Price: 19}
-	db.Model(&p).Update(&p)
+    println("update L1 to code=4")
+	p := Stock{Code: "L1", Price: 4}
+    time.Sleep(30*time.Second)
+    err := db.Model(&p).Update(&p)
+    println(err)
 	//db.Model(&product).Update("Price", 22)
 }
 
