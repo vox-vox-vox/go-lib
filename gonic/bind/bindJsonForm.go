@@ -2,7 +2,9 @@ package main
 import (
     "github.com/gin-gonic/gin"
     "net/http"
-    _"fmt"
+    "fmt"
+    "encoding/json"
+
 )
 // 从 JSON 绑定
 type Login struct {
@@ -10,6 +12,7 @@ type Login struct {
     //username string `form:"user" json:"user" binding:"required"`
     User     string `form:"user" json:"user" binding:"required"`
     Password string `form:"password" json:"password" binding:"required"`
+    Arg  json.RawMessage `json:"arg"`
 }
 
 func main() {
@@ -19,6 +22,7 @@ func main() {
     router.POST("/loginJSON", func(c *gin.Context) {
         var json Login
         if err := c.ShouldBindJSON(&json); err == nil {
+            fmt.Printf("arg:%T,%v\n", json.Arg, string(json.Arg))
             if json.User == "manu" && json.Password == "123" {
                 c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
             } else {

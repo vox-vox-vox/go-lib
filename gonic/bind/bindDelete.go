@@ -11,14 +11,17 @@ type UserReq struct {
 
 /**
 nc -l 8088
-curl  ':8088' -F 'password=ahui1'
-curl  -X POST -H 'Content-Type: application/x-www-form-urlencoded' ':8088' -d 'password=ahui1'
+# work
+curl -X DELETE 'https://httpbin.org/delete' -d 'password=pass'
+curl -X DELETE ':8088' -F 'password=pass'
 
+# not work
+curl  -X DELETE -H 'Content-Type: application/x-www-form-urlencoded' ':8088' -d 'password=pass'
  */
 func main() {
     router := gin.Default()
 
-    router.POST("/", func(c *gin.Context) {
+    router.DELETE("/", func(c *gin.Context) {
         req := UserReq{}
         if err := c.ShouldBind(&req); err != nil {
             c.AbortWithError(http.StatusBadRequest, err)

@@ -16,6 +16,7 @@ type Dict map[string]interface{}
 func main() {
      m,_:= json.Marshal(Dict{
         "a":1,
+        "bytes":[]byte("中国"),
         "k2":"b",
         "k3":false,
         "time": Dict{

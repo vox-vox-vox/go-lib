@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/jinzhu/gorm"
-    "time"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -19,8 +19,6 @@ type Product struct {
 type Stock struct {
 	Code  string `gorm:"primary_key" `
 	Price uint
-    CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 type User struct {
@@ -41,38 +39,20 @@ func create() {
 
 // 创建
 func createStock() {
-	p := Stock{Code: "L1", Price: 1}
+	p := Stock{Code: "L1218", Price: 17}
 	db.Create(&p)
-	db.Create(&Stock{Code: "L2", Price: 2})
+	db.Create(&Stock{Code: "L1219", Price: 19})
 }
 
-// update
-func updateStock() {
-    println("update L1 to code=4")
-	p := Stock{Code: "L1", Price: 4}
-    time.Sleep(30*time.Second)
-    err := db.Model(&p).Update(&p)
-    println(err)
-	//db.Model(&product).Update("Price", 22)
-}
-
-// read raw
+// read
 func selectStock() {
-	var stock Stock
-	db.First(&stock, "code = ?", "L1217")
-	fmt.Println(stock)
-
-    //可以是指针数组
-    // stocks :=  []*Stock{}
-    type S struct{Code string}
-    stocks :=  []*S{}
-    db.Raw("select * from stocks limit 2").Scan(&stocks)
-    fmt.Println("read stock:", *stocks[0])
-
-    //也可以纯指针
-    sp:= &S{}
-    db.Raw("select * from stocks limit 2").Scan(sp)
-    fmt.Println("read stockp:", *sp)
+    stock :=  &Stock{}
+    cursor:= db.Where("price%20=?", 100).Select([]string{"code"}).Limit(10).Find(stock)
+    err := cursor.Error
+    fmt.Println("read empty stock:", *stock, err)
+    fmt.Println("read Find().RecordNotFound():", cursor.RecordNotFound())
+    fmt.Println("read empty stock(record not found): ", strings.Contains(err.Error(),"record not found"))
+    fmt.Println("read r.RowsAffected > 0: ", db.Where("price%20=?", 17).Select([]string{"code"}).Limit(10).Find(stock).RowsAffected > 0)
 
 }
 
@@ -91,12 +71,8 @@ func main() {
 	db.AutoMigrate(&Product{})
 	db.AutoMigrate(&Stock{})
 	createStock()
-	updateStock()
 	selectStock()
 
 	defer db.Close()
 }
 
-/*
-
- */

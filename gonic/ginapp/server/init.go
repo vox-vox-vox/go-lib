@@ -13,7 +13,15 @@ func Register(r *gin.Engine) {
 	r.Any("/echo/*anypath", EchoServer)
 	r.GET("/sleep/:second", sleepFunc)
 	r.GET("/cpu/:second", cpuFunc)
+	r.GET("/json/map", jsonMapFunc)
 	fileRouter(r)
+}
+
+func jsonMapFunc(c *gin.Context) {
+    m := map[string][]byte{
+        "status": []byte("running!中国"),
+    }
+	c.JSON(http.StatusOK, m)
 }
 
 func cpuFunc(c *gin.Context) {
@@ -38,5 +46,6 @@ func longRun(seconds int) int {
 func sleepFunc(c *gin.Context) {
 	seconds, _ := strconv.Atoi(c.Param("second"))
 	time.Sleep(time.Duration(seconds) * time.Second)
+    fmt.Printf("%vs passed!\n", seconds)
 	c.JSON(http.StatusOK, "sleep second: "+c.Param("second"))
 }

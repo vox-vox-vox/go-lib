@@ -27,17 +27,28 @@ type User struct {
 }
 
 // 创建
+func create() {
+	p := Product{Code: "L1217", Price: 17}
+	fmt.Printf("1. %#v\n", db.NewRecord(p))
+	fmt.Printf("2. %#v\n", p.ID)
+	db.Create(&p)
+	fmt.Printf("3. %#v\n", db.NewRecord(p))
+	fmt.Printf("4. %#v\n", p.ID)
+}
+
+// 创建
 func createStock() {
 	p := Stock{Code: "L1218", Price: 17}
 	db.Create(&p)
 	db.Create(&Stock{Code: "L1219", Price: 19})
 }
 
-// update
-func updateStock() {
-	p := Stock{Code: "L1217", Price: 19}
-	db.Model(&p).Where(&p).Find(&p)
-	db.Model(&p).Where("code=?","1").Where("price>? or price<?", 1,100).Update(&p)
+// read
+func selectStock() {
+    stocks :=  []*Stock{}
+    err := db.Where("price%20=?", 0).Select([]string{"code"}).Limit(10).Find(&stocks).Error
+    fmt.Println("read stocks:", len(stocks), err)
+
 }
 
 func main() {
@@ -51,11 +62,12 @@ func main() {
 		panic("连接数据库失败")
 	}
 
-	updateStock()
+	// 自动迁移模式
+	db.AutoMigrate(&Product{})
+	db.AutoMigrate(&Stock{})
+	createStock()
+	selectStock()
 
 	defer db.Close()
 }
 
-/*
-
- */
