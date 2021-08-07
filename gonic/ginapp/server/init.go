@@ -10,11 +10,12 @@ import (
 )
 
 func Register(r *gin.Engine) {
+	swagRouter(r)
+	fileRouter(r)
 	r.Any("/echo/*anypath", EchoServer)
 	r.GET("/sleep/:second", sleepFunc)
 	r.GET("/cpu/:second", cpuFunc)
 	r.GET("/json/map", jsonMapFunc)
-	fileRouter(r)
 }
 
 func jsonMapFunc(c *gin.Context) {

@@ -12,8 +12,10 @@ require (
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
 	github.com/manucorporat/stats v0.0.0-20180402194714-3ba42d56d227
 	github.com/newrelic/go-agent v2.7.0+incompatible
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.4.0
+	github.com/swaggo/gin-swagger v1.3.1 // indirect
 	github.com/thinkerou/favicon v0.1.0
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	golang.org/x/net v0.0.0-20190620200207-3b0461eec859

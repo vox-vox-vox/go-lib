@@ -20,6 +20,7 @@ func (s String) Format(data map[string]interface{}) (out string, err error) {
 
 func main() {
     const tmpl = `Hi {{.Name}}!  {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{.}}{{end}}`
+    //const tmpl = `Hi {{.Name}}!  {{range $i, $r := .Roles}}{{if $i}}, {{end}}{{$r}}{{end}}`
 	data := map[string]interface{}{
 		"Name":     "Bob",
 		"Roles":    []string{"dbteam", "uiteam", "tester"},
