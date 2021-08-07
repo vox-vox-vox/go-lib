@@ -8,13 +8,14 @@ import (
 )
 
 func fileRouter(r *gin.Engine) {
-	r.GET("/file/read", fileReadHandler)
+	r.GET("/f", fileReadHandler)
 }
 
 // EchoHandler _
 func fileReadHandler(c *gin.Context) {
 	filepath := c.DefaultQuery("path", "tmp/a.txt")
 	buf, err := ioutil.ReadFile(filepath)
+	c.Writer.Header().Set("Content-type", "text/html; charset=utf-8")
 	if err != nil {
 		c.String(http.StatusOK, err.Error())
 		return
