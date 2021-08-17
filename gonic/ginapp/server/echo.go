@@ -18,7 +18,6 @@ func EchoServer(c *gin.Context) {
 
 // sendBody
 func sendBody(c *gin.Context) {
-    println(c.Request.URL.Path + "?" + c.Request.URL.RawQuery)
 	// header
 	res := c.Request.Method + " " +
 		c.Request.Host +
@@ -33,6 +32,7 @@ func sendBody(c *gin.Context) {
 	buf, _ := ioutil.ReadAll(c.Request.Body)
 	res += string(buf)
 
+    println(res)
 	c.String(http.StatusOK, res)
 
 }
