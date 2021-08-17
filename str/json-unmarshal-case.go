@@ -6,7 +6,7 @@ import (
 )
 
 type Task struct{
-    name string
+    Name string
 }
 
 func main() {
@@ -14,16 +14,21 @@ func main() {
 	var infObj interface{}
     var tasks []Task
     data := struct{
-        data *[]Task
+        Tasks *[]Task
         Age int
+        Weight int
+        height int
+        Other int
     }{
-        data:&tasks,
+        Tasks:&tasks,
     }
-    rawbody := []byte(`{"data":[{"name":"hilojack"}], "Age":2}`)
+    rawbody := []byte(`{"tasks":[{"name":"hilojack"}], "Age":2}`)
     json.Unmarshal(rawbody, &infObj)
-	fmt.Printf("infObj:%+v\n", infObj)
+	fmt.Printf("infObj:%#v\n\n", infObj)
+
     err:=json.Unmarshal(rawbody, &data)
     fmt.Printf("data:%+v, err:%v\n", data, err)
-	fmt.Printf("tasks:%+v\n", tasks)
+    fmt.Printf("data.tasks:%#v, err:%v\n", *data.Tasks, err)
+	fmt.Printf("tasks:%#v\n", tasks)
 
 }
