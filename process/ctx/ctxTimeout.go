@@ -17,13 +17,19 @@ func main() {
 		n := 1
 		go func() {
 			for {
+                err:=ctx.Err()
+                if err!=nil{
+                    fmt.Println("context timeout:", err)
+                    return
+                }
 				select {
 				case <-ctx.Done():
-					return // returning not to leak the goroutine
+                    fmt.Println("context done!n=", n)
+					return
 				case dst <- n:
-                    fmt.Println("wait....", n)
-                    time.Sleep(3*time.Second)
-                    fmt.Println("wait done")
+                    fmt.Println("wait....,n=", n)
+                    time.Sleep(1*time.Second)
+                    fmt.Println("wait after")
 					n++
 				}
 			}
@@ -31,8 +37,8 @@ func main() {
 		return dst
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel() // cancel when we are finished consuming integers
+    ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
 
 	for n := range gen(ctx) {
 		fmt.Println(n)

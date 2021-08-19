@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/ahuigo/playflame v0.0.0-20210531064429-e3cc3c411b41 // indirect
+	github.com/ahuigo/requests v0.1.15 // indirect
 	github.com/alessio/shellescape v1.4.1 // indirect
 	github.com/codemodus/parth v1.1.3 // indirect
 	github.com/creack/pty v1.1.11

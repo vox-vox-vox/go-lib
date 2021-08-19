@@ -12,6 +12,7 @@ import (
 func Register(r *gin.Engine) {
 	swagRouter(r)
 	fileRouter(r)
+	gormRouter(r)
 	r.Any("/echo/*anypath", EchoServer)
 	r.GET("/sleep/:second", sleepFunc)
 	r.GET("/cpu/:second", cpuFunc)

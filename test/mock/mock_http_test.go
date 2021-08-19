@@ -8,18 +8,20 @@ import (
 )
 
 func TestFoo(t *testing.T) {
-	defer gock.Off()
+	//defer gock.Off()
 
 	// mock response
 	gock.New("http://m.com").
-		Get("/bar").
+		Post("/bar").
+        Persist(). //Times(10)
 		Reply(200).
 		JSON(map[string]string{"foo": "bar"})
 
 	// send request
-	resp, err := requests.Get("http://m.com/bar")
+	resp, err := requests.Post("http://m.com/bar")
 	if err != nil {
 		t.Fatal(err)
 	}
+    t.Log(resp.R.StatusCode)
 	t.Log(resp.Text())
 }
