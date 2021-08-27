@@ -19,7 +19,15 @@ func struct_nil(){
 }
 
 func main() {
+    // test nil[k] exists
+    var m1 map[string]int
+    if _,ok :=m1["a"]; !ok{
+        println("nil[a] not exists. ")
+    }
+
+    // test struct nil
     struct_nil()
+    // test  arg nil
     m := arg_nil()
     fmt.Printf("%v\n", m)
 }

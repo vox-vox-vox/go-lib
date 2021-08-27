@@ -10,6 +10,7 @@ require (
 	github.com/creack/pty v1.1.11
 	github.com/docker/docker v20.10.5+incompatible
 	github.com/domac/playflame v0.0.0-20170101231248-6b2df91f0198 // indirect
+	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-ldap/ldap/v3 v3.2.4
 	github.com/go-redis/redis v6.15.9+incompatible // indirect
 	github.com/go-redis/redis/v7 v7.4.0 // indirect

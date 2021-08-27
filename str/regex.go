@@ -19,8 +19,8 @@ func compile(){
 
     r := regexp.MustCompile(`\((?P<fatal>fatal: [^)]+)\)`)
     res := r.FindStringSubmatch("(fatal: do not exists)     ")
-    fmt.Println("res:",res[0])
-    fmt.Println("res:",res[1])
+    fmt.Println("res[0]:",res[0])
+    fmt.Println("res[1]:",res[1])
 
 }
 
